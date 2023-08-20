@@ -1,4 +1,4 @@
-'''Hello every one and everybody in the world'''
+'''Hello everyone'''
 import telebot
 from telebot import types
 import Super_secret as s
