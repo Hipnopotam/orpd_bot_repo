@@ -80,6 +80,9 @@ def ntd_fun(message):
     if ntd == None:
         oshibka=bot.send_message(message.chat.id, 'Введите объем цифрами, м3:')
         bot.register_next_step_handler(oshibka ,ntd_fun)
+    elif 'На этом обзор демо версии окончен' in ntd:
+        print('End of demo')
+        bot.send_message(message.chat.id, ntd)
     else:
         if 'ТР ТС 032:' in ntd:
             mark = types.InlineKeyboardMarkup()
