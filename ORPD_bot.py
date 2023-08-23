@@ -1,4 +1,7 @@
-'''Hello everyone'''
+'''Hello everyone
+сначала git stash
+потом git pull
+'''
 import telebot
 from telebot import types
 import Super_secret as s
@@ -170,8 +173,14 @@ def pribavka_fun(message):
 
 ###########^^^^^^^^^^^^ Конец расчета Сосудов ^^^^^^^^^^^^###########
 
-
-
+#########^^^^^^^^^^ Начало расчета трубопроводов ^^^^^^^^^^#########
+#при вводе activate
+@bot.message_handler(commands=['pipe'])
+def pipe_start(message):
+    fun.check_user_fun(message)
+    # num1 = 
+    bot.send_message(message.chat.id, "В разработке")
+    # bot.register_next_step_handler(num1, rabD_fun)
 #######################################################
 
 ##############          АДМИНКА          ##############
