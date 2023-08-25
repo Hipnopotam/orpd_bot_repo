@@ -9,6 +9,7 @@ import DB as db
 import functions as fun
 import admin_fun as admin
 import vessel_fun as vf
+import pipe_fun as pf
 import activate as activate
 from time import sleep
 
@@ -160,8 +161,8 @@ def pribavka_fun(message):
 Срок эксплуатации - {user_srok}
 Прибавка на коррозию - {user_pribavka} мм.
 
-На сосуд распространяется <b>{user_ntd}</b>
-Необходимость постановки на учет в РТН - {user_rtn}
+На сосуд распространяется <b>{user_ntd}</b>.
+Постановка на учет в РТН - {user_rtn}
 '''
         bot.send_message(message.chat.id, final_message, parse_mode='HTML')
         bot.send_message(message.chat.id, pribavka, parse_mode='HTML')
@@ -178,9 +179,14 @@ def pribavka_fun(message):
 @bot.message_handler(commands=['pipe'])
 def pipe_start(message):
     fun.check_user_fun(message)
-    # num1 = 
-    bot.send_message(message.chat.id, "В разработке")
-    # bot.register_next_step_handler(num1, rabD_fun)
+    num1 = bot.send_message(message.chat.id, "В разработке")
+    bot.register_next_step_handler(num1, pipe_rabD_fun)
+
+def pipe_rabD_fun(message):
+    raD = pf.pipe_rabD_fun(message)
+
+#########^^^^^^^^^^ Конец расчета трубопроводов ^^^^^^^^^^#########
+
 #######################################################
 
 ##############          АДМИНКА          ##############
@@ -204,7 +210,8 @@ def admin_button_fun(message):
     #Кнопки
     markupAdmin = types.InlineKeyboardMarkup()
     buttonViewUsers = types.InlineKeyboardButton(text='Просмотреть пользователей UsersTab', callback_data='viewUsersTab')
-    buttonViewRas4et = types.InlineKeyboardButton(text='Просмотреть пользователей ras4etTab', callback_data='viewRas4etTab')
+    buttonViewRas4et = types.InlineKeyboardButton(text='Просмотреть пользователей Vessel', callback_data='viewRas4etTab')
+    buttonViewRas4et = types.InlineKeyboardButton(text='Просмотреть пользователей Pipe', callback_data='viewPipeTab')
     buttonSQL = types.InlineKeyboardButton(text='Свободный SQL запрос', callback_data='querySQL')
     # buttonCalcStart = types.InlineKeyboardButton(text='Включить калькулятор', callback_data='calcStart')
     buttonActivate = types.InlineKeyboardButton(text='Активировать по промокоду', callback_data='activateByPromoCode')
@@ -274,6 +281,9 @@ def response(function_call):
             bot.send_message(function_call.message.chat.id, mess)
         elif function_call.data=='viewRas4etTab':
             mess=admin.get_column_names_fun('ras4et')
+            bot.send_message(function_call.message.chat.id, mess)
+        elif function_call.data=='viewPipeTab':
+            mess=admin.get_column_names_fun('pipe')
             bot.send_message(function_call.message.chat.id, mess)
         # elif function_call.data=='calcStart':
         #     num1 = bot.send_message(function_call.message.chat.id, "Введите Рабочее давление, МПа:")
