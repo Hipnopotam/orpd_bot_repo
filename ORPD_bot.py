@@ -224,7 +224,7 @@ def pipe_nomD_fun(message):
         mess = bot.send_message(message.chat.id, 'Введите номинальный диаметр цифрами, мм')
         bot.register_next_step_handler(mess, pipe_nomD_fun)
     else:
-        mess = bot.register_next_step_handler(message.chat.id, 'Введите сокрость коррозии, мм/год')
+        mess = bot.send_message(message.chat.id, 'Введите сокрость коррозии, мм/год')
         bot.register_next_step_handler(mess, pipe_skKorr_fun)
 
 def pipe_skKorr_fun(message):
