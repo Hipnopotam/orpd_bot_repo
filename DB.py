@@ -68,3 +68,39 @@ podpiska_do TEXT
 
 execute_query(connection,createRas4etTable, 'Проверка БД на существование таблицы расчета')
 execute_query(connection,createUsersTable, 'Проверка БД на существование таблицы Юзеров')
+
+
+# import DB as db
+
+'''rabD - рабочее давление
+rasD - расчетное давление
+rabT - рабочая температура
+rasT - расчетная температура
+dNom - номинальный диаметр
+sreda - газ, пар или жидкость
+skKorr - скорость коррозии
+gruppaSr - группа среды:
+А - Токсичные, Класс 1, Класс 2, Класс 3
+Б - Взрывопожароопасные, ГГ или СУГ, ЛВЖ, ГЖ
+В - ТГ или НГ
+'''
+
+createPipeTable = """
+CREATE TABLE IF NOT EXISTS pipe (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  telegram_id INTEGER,
+  name TEXT,
+  rabD TEXT,
+  rasD TEXT
+  rabT TEXT,
+  rasT TEXT,
+  dNom TEXT,
+  sreda TEXT,
+  pipe_category TEXT,
+  revizia_pipe TEXT
+  prime4anie TEXT
+);
+"""
+connection = db.create_connection("ORPD.sqlite")
+db.execute_query(connection, createPipeTable)
+connection.close()
