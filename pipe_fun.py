@@ -3,14 +3,15 @@ import functions as fun
 import DB as db
 from tabulate import tabulate
 
+
 '''
 rabD - рабочее давление
 rasD - расчетное давление
 rabT - рабочая температура
 rasT - расчетная температура
 dNom - номинальный диаметр
-sreda - газ, пар или жидкость
 skKorr - скорость коррозии
+sreda - газ, пар или жидкость
 gruppaSr - группа среды:
 А - Токсичные, Класс 1, Класс 2, Класс 3
 Б - Взрывопожароопасные, ГГ или СУГ, ЛВЖ, ГЖ
@@ -54,7 +55,49 @@ def pipe_rabT_fun(message, result=' '):
         # Работа с БД
         connection = db.create_connection('ORPD.sqlite', '3')
         zapros = f'UPDATE pipe SET rabT={rabT} WHERE telegram_id={message.chat.id}'
-        db.execute_query(connection, zapros, 'Расчетное давление внесение в БД')
+        db.execute_query(connection, zapros, 'Рабочая температура внесение в БД')
+        connection.close()
+        # Конец работы с БД
+        return result
+    else:
+        return None
+    
+def pipe_rasT_fun(message, result=' '):
+    rasT = str(message.text)
+    if fun.check_digit(rasT) != False:
+        rasT = float(fun.zapyataya(rasT))
+        # Работа с БД
+        connection = db.create_connection('ORPD.sqlite', '3')
+        zapros = f'UPDATE pipe SET rabT={rasT} WHERE telegram_id={message.chat.id}'
+        db.execute_query(connection, zapros, 'Расчетная температура внесение в БД')
+        connection.close()
+        # Конец работы с БД
+        return result
+    else:
+        return None
+    
+def pipe_nomD_fun(message, result=' '):
+    nomD = str(message.text)
+    if fun.check_digit(nomD) != False:
+        nomD = float(fun.zapyataya(nomD))
+        # Работа с БД
+        connection = db.create_connection('ORPD.sqlite', '4')
+        zapros = f'UPDATE pipe SET nomD={nomD} WHERE telegram_id={message.chat.id}'
+        db.execute_query(connection, zapros, 'Номинальный диаметр внесение в БД')
+        connection.close()
+        # Конец работы с БД
+        return result
+    else:
+        return None
+    
+def pipe_skKorr_fun(message, result=' '):
+    skKorr = str(message.text)
+    if fun.check_digit(skKorr) != False:
+        skKorr = float(fun.zapyataya(skKorr))
+        # Работа с БД
+        connection = db.create_connection('ORPD.sqlite', '4')
+        zapros = f'UPDATE pipe SET skKorr={skKorr} WHERE telegram_id={message.chat.id}'
+        db.execute_query(connection, zapros, 'Скорость коррозии внесение в БД')
         connection.close()
         # Конец работы с БД
         return result

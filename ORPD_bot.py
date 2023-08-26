@@ -207,8 +207,45 @@ def pipe_rabT_fun(message):
         bot.register_next_step_handler(mess, pipe_rasD_fun)
     else:
         mess = bot.send_message(message.chat.id, 'Введите расчетную температуру, C: ')
-        bot.register_next_step_handler(mess, pipe_rabT_fun)
+        bot.register_next_step_handler(mess, pipe_rasT_fun)
 
+def pipe_rasT_fun(message):
+    rasT = pf.pipe_rasT_fun(message)
+    if rasT == None:
+        mess = bot.send_message(message.chat.id, 'Введите расчетную температуру цифрами, МПа')
+        bot.register_next_step_handler(mess, pipe_rasT_fun)
+    else:
+        mess = bot.send_message(message.chat.id, 'Введите номинальный диаметр, мм:')
+        bot.register_next_step_handler(mess, pipe_nomD_fun)
+    
+def pipe_nomD_fun(message):
+    nomD = pf.pipe_nomD_fun(message)
+    if nomD == None:
+        mess = bot.send_message(message.chat.id, 'Введите номинальный диаметр цифрами, мм')
+        bot.register_next_step_handler(mess, pipe_nomD_fun)
+    else:
+        mess = bot.register_next_step_handler(mess, 'Введите сокрость коррозии, мм/год')
+        bot.register_next_step_handler(mess, pipe_skKorr_fun)
+
+def pipe_skKorr_fun(message):
+    skKorr = pf.pipe_skKorr_fun(message)
+    if skKorr == None:
+        mess = bot.send_message(message.chat.id, 'Введите скорость коррозии цифрами, мм/год')
+        bot.register_next_step_handler(mess, pipe_skKorr_fun)
+    else:
+        bot.send_message(message.chat.id, 'Ввдеите тип среды:')
+        markup5 = types.InlineKeyboardMarkup()
+        pipe_button_gas = types.InlineKeyboardButton(text = 'Газ', callback_data='gas')
+        pipe_button_steam = types.InlineKeyboardButton(text = 'Пар', callback_data='steam')
+        pipe_button_liquid = types.InlineKeyboardButton(text = 'жидкость', callback_data='liquid')
+        markup5.add(pipe_button_gas)
+        markup5.add(pipe_button_steam)
+        markup5.add(pipe_button_liquid)
+        bot.send_message(message.chat.id, 'Выберете тип оборудования:', parse_mode='html', reply_markup=markup5)
+
+def pipe_gruppa_fun(message):
+    # gruppa=
+    pass
 #########^^^^^^^^^^ Конец расчета трубопроводов ^^^^^^^^^^#########
 
 #######################################################
@@ -293,29 +330,40 @@ def response(function_call):
             num4s='2 группа'
             num4=bot.send_message(function_call.message.chat.id, num4s)
             rtn_fun(num4)
-        elif function_call.data=='sosud':
+        elif function_call.data == 'sosud':
             num4s='Сосуд'
             num4=bot.send_message(function_call.message.chat.id, num4s)
             sos_type_fun(num4)
-        elif function_call.data=='tepnik':
+        elif function_call.data == 'tepnik':
             num4s='Теплообменник'
             num4=bot.send_message(function_call.message.chat.id, num4s)
             sos_type_fun(num4)
-        elif function_call.data=='viewUsersTab':
+        elif function_call.data == 'viewUsersTab':
             mess=admin.get_column_names_fun('users')
             bot.send_message(function_call.message.chat.id, mess)
-        elif function_call.data=='viewRas4etTab':
+        elif function_call.data == 'viewRas4etTab':
             mess=admin.get_column_names_fun('ras4et')
             bot.send_message(function_call.message.chat.id, mess)
-        elif function_call.data=='viewPipeTab':
+        elif function_call.data == 'viewPipeTab':
             mess=admin.get_column_names_fun('pipe')
             bot.send_message(function_call.message.chat.id, mess)
         # elif function_call.data=='calcStart':
         #     num1 = bot.send_message(function_call.message.chat.id, "Введите Рабочее давление, МПа:")
         #     bot.register_next_step_handler(num1, rabD_fun)
-        elif function_call.data=='querySQL':
+        elif function_call.data == 'querySQL':
             quer=bot.send_message(function_call.message.chat.id,'Введите SQL запрос')
             bot.register_next_step_handler(quer, admin.query_SQL_fun)
+        ########################################
+        ############# Кнопки pipe ##############
+        elif function_call.data == 'gas':
+            mess = bot.send_message(function_call.message.chat.id, 'Газ')
+            pipe_gruppa_fun(mess)
+        elif function_call.data == 'steam':
+            mess = bot.send_message(function_call.message.chat.id, 'Пар')
+            pipe_gruppa_fun(mess)
+        elif function_call.data == 'liquid':
+            mess = bot.send_message(function_call.message.chat.id, 'Жидкость')
+            pipe_gruppa_fun(mess)
         ########################################
         ############ КНОПКИ ПОДПИСКИ ###########
         elif function_call.data=='month':
