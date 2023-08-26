@@ -42,7 +42,7 @@ def nachalo_fun(message):
 # При вводе /vessel
 @bot.message_handler(commands=['vessel'])
 def vessel_start(message):
-    fun.check_user_fun(message)
+    fun.check_user_fun(message, 'ras4et')
     num1 = bot.send_message(message.chat.id, "Введите Рабочее давление, МПа:")
     bot.register_next_step_handler(num1, rabD_fun)
 
@@ -178,7 +178,7 @@ def pribavka_fun(message):
 #при вводе activate
 @bot.message_handler(commands=['pipe'])
 def pipe_start(message):
-    fun.check_user_fun(message)
+    fun.check_user_fun(message, 'pipe')
     num1 = bot.send_message(message.chat.id, "Введите рабочее давление, МПа")
     bot.register_next_step_handler(num1, pipe_rabD_fun)
 

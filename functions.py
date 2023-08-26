@@ -30,7 +30,7 @@ def check_digit(param):
         return False
     
 
-def check_user_fun(message):
+def check_user_fun(message, tab_name):
     check_user_result = ['',0]
     mess='Подключение для проверки на сущ юзера'
     connection = db.create_connection("ORPD.sqlite", mess)
@@ -47,16 +47,16 @@ def check_user_fun(message):
         print('нету юзера')
 
     if ch!=[] and str(date.today())<podpiska_do and len(podpiska_do)==10:
-        cleaner=f'DELETE FROM ras4et WHERE telegram_id={message.from_user.id}'
+        cleaner=f'DELETE FROM {tab_name} WHERE telegram_id={message.from_user.id}'
         db.execute_query(connection,cleaner,'Cleaner')
         
-        newUserQuery=f"INSERT INTO ras4et ('telegram_id','name', 'prime4anie') VALUES ({message.from_user.id}, '{message.from_user.first_name} {message.from_user.last_name}', 'active')"
+        newUserQuery=f"INSERT INTO {tab_name} ('telegram_id','name', 'prime4anie') VALUES ({message.from_user.id}, '{message.from_user.first_name} {message.from_user.last_name}', 'active')"
         db.execute_query(connection,newUserQuery)
         # handle_text(message)
         check_user_result = ['Ваша подписка активна', 1]
         
     else:
-        cleaner=f'DELETE FROM ras4et WHERE telegram_id={message.from_user.id}'
+        cleaner=f'DELETE FROM {tab_name} WHERE telegram_id={message.from_user.id}'
         db.execute_query(connection,cleaner,'Cleaner')
 
         if str(date.today())>podpiska_do and podpiska_do!='':
@@ -71,7 +71,7 @@ def check_user_fun(message):
             print('Юзер в БД отсутствует')
         tex=tex+"Калькулятор пока работает в тестовом режиме. \nСкоро заработает в полную силу, но только для подписчиков.\nА пока предлагаю ознакомиться с демо-версией\n\nДля подписки введите /activate"
     
-        newUserQuery=f"INSERT INTO ras4et ('telegram_id','name', 'prime4anie') VALUES ({message.from_user.id}, '{message.from_user.first_name} {message.from_user.last_name}', 'no_active')"
+        newUserQuery=f"INSERT INTO {tab_name} ('telegram_id','name', 'prime4anie') VALUES ({message.from_user.id}, '{message.from_user.first_name} {message.from_user.last_name}', 'no_active')"
         db.execute_query(connection,newUserQuery)
         check_user_result = [0, tex]
         # handle_text(message)
