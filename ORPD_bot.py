@@ -33,8 +33,8 @@ def nachalo_fun(message):
         admin_button_fun(message)
         fun.check_user_fun(message)
     else:
-        check_user_activate = fun.check_user_fun(message)
-        greeting = f"Здравствуйте, {message.from_user.first_name}.\n\n{check_user_activate[1]}"
+        # check_user_activate = fun.check_user_fun(message, 'ras4et')
+        greeting = f"Здравствуйте, {message.from_user.first_name}." #\n\n{check_user_activate[1]}"
     bot.send_message(message.chat.id, greeting)
     bot.send_message(message.chat.id, START)
 
