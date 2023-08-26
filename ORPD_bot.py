@@ -179,11 +179,35 @@ def pribavka_fun(message):
 @bot.message_handler(commands=['pipe'])
 def pipe_start(message):
     fun.check_user_fun(message)
-    num1 = bot.send_message(message.chat.id, "В разработке")
+    num1 = bot.send_message(message.chat.id, "Введите рабочее давление, МПа")
     bot.register_next_step_handler(num1, pipe_rabD_fun)
 
 def pipe_rabD_fun(message):
-    raD = pf.pipe_rabD_fun(message)
+    rabD = pf.pipe_rabD_fun(message)
+    if rabD == None:
+        mess = bot.send_message(message.chat.id, 'Введите рабочее давление цифрами, МПа:')
+        bot.register_next_xtep_handler(mess, pipe_rabD_fun)
+    else:
+        mess = bot.send_message(message.chat.id, 'Введите расчетное давление, МПа:')
+        bot.register_next_step_handler(mess, pipe_rasD_fun)
+
+def pipe_rasD_fun(message):
+    rasD = pf.pipe_rasD_fun(message)
+    if rasD == None:
+        mess = bot.send_message(message.chat.id, 'Введите расчетное давление цифрами, МПа:')
+        bot.register_next_step_handler(mess, pipe_rasD_fun)
+    else:
+        mess = bot.send_message(message.chat.id, 'Введите рабочую температуру, C:')
+        bot.register_next_step_handler(mess, pipe_rabT_fun)
+
+def pipe_rabT_fun(message):
+    rabT = pf.pipe_rabT_fun(message)
+    if rabT == None:
+        mess = bot.send_message(message.chat.id, 'Введите рабочую температуру цифрами, МПа:')
+        bot.register_next_step_handler(mess, pipe_rasD_fun)
+    else:
+        mess = bot.send_message(message.chat.id, 'Введите расчетную температуру, C:')
+        bot.register_next_step_handler(mess, pipe_rabT_fun)
 
 #########^^^^^^^^^^ Конец расчета трубопроводов ^^^^^^^^^^#########
 
