@@ -186,7 +186,7 @@ def pipe_rabD_fun(message):
     rabD = pf.pipe_rabD_fun(message)
     if rabD == None:
         mess = bot.send_message(message.chat.id, 'Введите рабочее давление цифрами, МПа:')
-        bot.register_next_xtep_handler(mess, pipe_rabD_fun)
+        bot.register_next_step_handler(mess, pipe_rabD_fun)
     else:
         mess = bot.send_message(message.chat.id, 'Введите расчетное давление, МПа:')
         bot.register_next_step_handler(mess, pipe_rasD_fun)
