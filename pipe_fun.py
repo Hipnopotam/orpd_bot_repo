@@ -1,4 +1,4 @@
-from ORPD_bot import pipe_rabT_fun
+
 import functions as fun
 import DB as db
 from tabulate import tabulate
