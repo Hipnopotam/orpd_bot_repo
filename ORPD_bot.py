@@ -31,7 +31,7 @@ def nachalo_fun(message):
     if message.chat.id==48691773:
         greeting = 'Здравствуй, мой разработчик <3'
         admin_button_fun(message)
-        fun.check_user_fun(message)
+        # fun.check_user_fun(message)
     else:
         # check_user_activate = fun.check_user_fun(message, 'ras4et')
         greeting = f"Здравствуйте, {message.from_user.first_name}." #\n\n{check_user_activate[1]}"
