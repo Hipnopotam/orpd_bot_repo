@@ -206,7 +206,7 @@ def pipe_rabT_fun(message):
         mess = bot.send_message(message.chat.id, 'Введите рабочую температуру цифрами, МПа:')
         bot.register_next_step_handler(mess, pipe_rasD_fun)
     else:
-        mess = bot.send_message(message.chat.id, 'Введите расчетную температуру, C:')
+        mess = bot.send_message(message.chat.id, 'Введите расчетную температуру, C: ')
         bot.register_next_step_handler(mess, pipe_rabT_fun)
 
 #########^^^^^^^^^^ Конец расчета трубопроводов ^^^^^^^^^^#########
