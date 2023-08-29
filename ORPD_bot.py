@@ -243,7 +243,7 @@ def pipe_nomD_fun(message):
         bot.register_next_step_handler(mess, pipe_skKorr_fun)
 
 def pipe_skKorr_fun(message):
-    skKorr = pf.pipe_skKorr_fun(message)
+    # skKorr = pf.pipe_skKorr_fun(message)
     skKorr = pf.pipe_digit_fun(message, 'skKorr')
     if skKorr == None:
         mess = bot.send_message(message.chat.id, 'Введите скорость коррозии цифрами, мм/год')
@@ -259,7 +259,8 @@ def pipe_skKorr_fun(message):
         bot.send_message(message.chat.id, 'Введите тип среды:', parse_mode='html', reply_markup=markup5)
 
 def pipe_sreda_fun(message):
-    pf.pipe_sreda_fun(message)
+    # pf.pipe_sreda_fun(message)
+    pf.pipe_text_fun(message, 'sreda')
     markup6 = types.InlineKeyboardMarkup()
     pipe_button_toxic = types.InlineKeyboardButton(text = 'Токсичные, Класс 1, Класс 2, Класс 3', callback_data='toxic')
     pipe_button_fire = types.InlineKeyboardButton(text = 'Взрывопожароопасные, ГГ или СУГ, ЛВЖ, ГЖ', callback_data='fire')
@@ -270,7 +271,7 @@ def pipe_sreda_fun(message):
     bot.send_message(message.chat.id, 'Введите группу среды:', parse_mode='html', reply_markup=markup6)
 
 def pipe_category_fun(message):
-    gruppa = pf.pipe_category_fun(message)
+    pf.pipe_text_fun(message, 'pipe_category')
     connection = db.create_connection('ORPD.sqlite')
     q = 'select * from pipe'
     z = db.execute_read_query(connection, q)

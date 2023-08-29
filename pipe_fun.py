@@ -33,6 +33,7 @@ def pipe_digit_fun(message, param_name, result=' '):
     else:
         return None
 
+'''
 def pipe_rabD_fun(message, result=' '):
     rabD = str(message.text)
     if fun.check_digit(rabD) != False:
@@ -117,7 +118,19 @@ def pipe_skKorr_fun(message, result=' '):
         return result
     else:
         return None
+'''
 
+def pipe_text_fun(message, param_name):
+    param = str(message.text)
+    # Работа с БД
+    connection = db.create_connection('ORPD.sqlite', '5')
+    zapros = f'UPDATE pipe SET {param_name}="{param}" WHERE telegram_id={message.chat.id}'
+    db.execute_query(connection, zapros, 'param_name внесение в БД')
+    connection.close()
+    # Конец работы с БД
+    return True
+
+'''
 def pipe_sreda_fun(message):
     sreda = str(message.text)
     # Работа с БД
@@ -137,3 +150,4 @@ def pipe_category_fun(message):
     connection.close()
     # Конец работы с БД
     return True
+'''
