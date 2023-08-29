@@ -233,19 +233,17 @@ def pipe_skKorr_fun(message):
         mess = bot.send_message(message.chat.id, 'Введите скорость коррозии цифрами, мм/год')
         bot.register_next_step_handler(mess, pipe_skKorr_fun)
     else:
-        bot.send_message(message.chat.id, 'Ввдеите тип среды:')
         markup5 = types.InlineKeyboardMarkup()
-        pipe_button_gas = types.InlineKeyboardButton(text = 'Газ', callback_data='gas')
+        pipe_button_gas = types.InlineKeyboardButton(text = 'Газ', callback_data='Gas')
         pipe_button_steam = types.InlineKeyboardButton(text = 'Пар', callback_data='steam')
         pipe_button_liquid = types.InlineKeyboardButton(text = 'жидкость', callback_data='liquid')
         markup5.add(pipe_button_gas)
         markup5.add(pipe_button_steam)
         markup5.add(pipe_button_liquid)
-        bot.send_message(message.chat.id, 'Выберете тип оборудования:', parse_mode='html', reply_markup=markup5)
+        bot.send_message(message.chat.id, 'Введите тип среды:', parse_mode='html', reply_markup=markup5)
 
 def pipe_gruppa_fun(message):
-    # gruppa=
-    pass
+    bot.send_message(message.chat.id, message.text)
 #########^^^^^^^^^^ Конец расчета трубопроводов ^^^^^^^^^^#########
 
 #######################################################
@@ -355,7 +353,7 @@ def response(function_call):
             bot.register_next_step_handler(quer, admin.query_SQL_fun)
         ########################################
         ############# Кнопки pipe ##############
-        elif function_call.data == 'gas':
+        elif function_call.data == 'Gas':
             mess = bot.send_message(function_call.message.chat.id, 'Газ')
             pipe_gruppa_fun(mess)
         elif function_call.data == 'steam':

@@ -85,6 +85,11 @@ gruppaSr - группа среды:
 В - ТГ или НГ
 '''
 
+deletePipeTable = 'drop table pipe'
+connection = create_connection("ORPD.sqlite")
+execute_query(connection, deletePipeTable)
+connection.close()
+
 createPipeTable = """
 CREATE TABLE IF NOT EXISTS pipe (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -101,6 +106,6 @@ CREATE TABLE IF NOT EXISTS pipe (
   prime4anie TEXT
 );
 """
-connection = db.create_connection("ORPD.sqlite")
-db.execute_query(connection, createPipeTable)
+connection = create_connection("ORPD.sqlite")
+execute_query(connection, createPipeTable)
 connection.close()
