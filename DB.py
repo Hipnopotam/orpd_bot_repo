@@ -66,7 +66,7 @@ podpiska_do TEXT
 )
 '''
 
-execute_query(connection,createRas4etTable, 'Проверка БД на существование таблицы расчета')
+# execute_query(connection,createRas4etTable, 'Проверка БД на существование таблицы расчета')
 execute_query(connection,createUsersTable, 'Проверка БД на существование таблицы Юзеров')
 
 
@@ -87,7 +87,7 @@ gruppaSr - группа среды:
 
 deletePipeTable = 'drop table pipe'
 connection = create_connection("ORPD.sqlite")
-execute_query(connection, deletePipeTable)
+# execute_query(connection, deletePipeTable)
 connection.close()
 
 createPipeTable = """
@@ -107,5 +107,5 @@ CREATE TABLE IF NOT EXISTS pipe (
 );
 """
 connection = create_connection("ORPD.sqlite")
-execute_query(connection, createPipeTable)
+# execute_query(connection, createPipeTable)
 connection.close()
