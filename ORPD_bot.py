@@ -13,6 +13,7 @@ import vessel_fun as vf
 import pipe_fun as pf
 import activate as activate
 from time import sleep
+from datetime import date
 
 bot = telebot.TeleBot(s.token)
 
@@ -255,7 +256,7 @@ def pipe_skKorr_fun(message):
 def pipe_sreda_fun(message):
     pf.pipe_text_fun(message, 'sreda')
     markup6 = types.InlineKeyboardMarkup()
-    pipe_button_toxic = types.InlineKeyboardButton(text = 'Токсичные, Класс 1, Класс 2, Класс 3', callback_data='toxic')
+    pipe_button_toxic = types.InlineKeyboardButton(text = 'Токсичная, Класс 1, Класс 2, Класс 3', callback_data='toxic')
     pipe_button_fire = types.InlineKeyboardButton(text = 'Взрывопожароопасные, ГГ или СУГ, ЛВЖ, ГЖ', callback_data='fire')
     pipe_button_not_fire = types.InlineKeyboardButton(text = 'ТГ или НГ', callback_data='not_fire')
     markup6.add(pipe_button_toxic)
@@ -284,6 +285,16 @@ def pipe_final_fun(message):
 #при вводе activate
 @bot.message_handler(commands=['activate'])
 def test_request_fun(message):
+    connection = db.create_connection("ORPD.sqlite", 'Подключение для активации подписки юзера')
+    checkUser=f"SELECT COUNT(telegram_id), podpiska_do FROM users WHERE telegram_id={message.chat.id} GROUP BY telegram_id"
+    ch=db.execute_read_query(connection,checkUser,'Поиск юзера в базе')
+    try:
+        data=ch[0][1]
+    except:
+        data='1982-03-29'
+    if ch!=[] and str(date.today())<data:
+        return [f'Ваша подписка действует до {data}\n\nДля продолжения введите /start',' ']
+    
     markup2 = types.InlineKeyboardMarkup()
     button_month = types.InlineKeyboardButton(text = '1 месяц', callback_data='month')
     button_half = types.InlineKeyboardButton(text = '6 месяцев', callback_data='half')
