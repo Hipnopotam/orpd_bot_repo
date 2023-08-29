@@ -49,5 +49,19 @@ def pipe_final_fun(message):
     connection = db.create_connection('ORPD.sqlite')
     q = f'SELECT * FROM pipe WHERE telegram_id={message.chat.id}'
     z ,= db.execute_read_query(connection, q)
-    print(z)
+    # (8, 48691773, 'Alexey N.', '1.0', '2.0', '3.0', '4.0', '5.0', 'Пар', '6.0', 'ТГ или НГ', None, 'no_active')
+    _, user_id, user_name, rabD, rasD, rabT, rasT, nomD, sreda, skKorr, pipe_category, *_ = z
+    result = f'''
+Трубопровод
+
+Рабочее давление - {rabD} МПа,
+Расчетное давление - {rasD} МПа,
+Рабочая температура - {rabT} C,
+Расчетная температура - {rasT} C,
+Номинальный диаметр - {nomD} мм,
+Скорость коррозии - {skKorr} мм/год,
+Тип среды - {sreda},
+Категория среды - {pipe_category}
+'''
     connection.close()
+    return result
