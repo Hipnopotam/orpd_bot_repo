@@ -2,6 +2,7 @@
 сначала git stash
 потом git pull
 '''
+from DB import execute_query
 import telebot
 from telebot import types
 import Super_secret as s
@@ -224,7 +225,7 @@ def pipe_nomD_fun(message):
         mess = bot.send_message(message.chat.id, 'Введите номинальный диаметр цифрами, мм')
         bot.register_next_step_handler(mess, pipe_nomD_fun)
     else:
-        mess = bot.send_message(message.chat.id, 'Введите сокрость коррозии, мм/год')
+        mess = bot.send_message(message.chat.id, 'Введите скорость коррозии, мм/год')
         bot.register_next_step_handler(mess, pipe_skKorr_fun)
 
 def pipe_skKorr_fun(message):
@@ -242,8 +243,29 @@ def pipe_skKorr_fun(message):
         markup5.add(pipe_button_liquid)
         bot.send_message(message.chat.id, 'Введите тип среды:', parse_mode='html', reply_markup=markup5)
 
-def pipe_gruppa_fun(message):
-    bot.send_message(message.chat.id, message.text)
+def pipe_sreda_fun(message):
+    pf.pipe_sreda_fun(message)
+    markup6 = types.InlineKeyboardMarkup()
+    pipe_button_toxic = types.InlineKeyboardButton(text = 'Токсичные, Класс 1, Класс 2, Класс 3', callback_data='toxic')
+    pipe_button_fire = types.InlineKeyboardButton(text = 'Взрывопожароопасные, ГГ или СУГ, ЛВЖ, ГЖ', callback_data='fire')
+    pipe_button_not_fire = types.InlineKeyboardButton(text = 'ТГ или НГ', callback_data='not_fire')
+    markup6.add(pipe_button_toxic)
+    markup6.add(pipe_button_fire)
+    markup6.add(pipe_button_not_fire)
+    bot.send_message(message.chat.id, 'Введите группу среды:', parse_mode='html', reply_markup=markup6)
+
+def pipe_category_fun(message):
+    gruppa = pf.pipe_gruppa_fun(message)
+    connection = db.create_connection('ORPD.sqlite')
+    q = 'select * from pipe'
+    z = db.execute_query(connection, q)
+    print (q)
+    connection.close()
+   
+
+def pipe_final_fun(message):
+    pass
+
 #########^^^^^^^^^^ Конец расчета трубопроводов ^^^^^^^^^^#########
 
 #######################################################
@@ -355,13 +377,22 @@ def response(function_call):
         ############# Кнопки pipe ##############
         elif function_call.data == 'Gas':
             mess = bot.send_message(function_call.message.chat.id, 'Газ')
-            pipe_gruppa_fun(mess)
+            pipe_sreda_fun(mess)
         elif function_call.data == 'steam':
             mess = bot.send_message(function_call.message.chat.id, 'Пар')
-            pipe_gruppa_fun(mess)
+            pipe_sreda_fun(mess)
         elif function_call.data == 'liquid':
             mess = bot.send_message(function_call.message.chat.id, 'Жидкость')
-            pipe_gruppa_fun(mess)
+            pipe_sreda_fun(mess)
+        elif function_call.data == 'toxic':
+            mess = bot.send_message(function_call.message.chat.id, 'Токсичные, Класс 1, Класс 2, Класс 3')
+            pipe_category_fun(mess)
+        elif function_call.data == 'fire':
+            mess = bot.send_message(function_call.message.chat.id, 'Взрывопожароопасные, ГГ или СУГ, ЛВЖ, ГЖ')
+            pipe_category_fun(mess)
+        elif function_call.data == 'not_fire':
+            mess = bot.send_message(function_call.message.chat.id, 'ТГ или НГ')
+            pipe_category_fun(mess)
         ########################################
         ############ КНОПКИ ПОДПИСКИ ###########
         elif function_call.data=='month':
