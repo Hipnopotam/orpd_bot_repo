@@ -2,7 +2,7 @@
 сначала git stash
 потом git pull
 '''
-from DB import execute_query
+
 import telebot
 from telebot import types
 import Super_secret as s
@@ -259,7 +259,7 @@ def pipe_category_fun(message):
     connection = db.create_connection('ORPD.sqlite')
     q = 'select * from pipe'
     z = db.execute_query(connection, q)
-    print (q)
+    print (z)
     connection.close()
    
 
