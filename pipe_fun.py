@@ -105,7 +105,7 @@ def pipe_skKorr_fun(message, result=' '):
         return None
 
 def pipe_sreda_fun(message):
-    sreda = str(message)
+    sreda = str(message.text)
     # Работа с БД
     connection = db.create_connection('ORPD.sqlite', '5')
     zapros = f'UPDATE pipe SET sreda="{sreda}" WHERE telegram_id={message.chat.id}'
@@ -115,7 +115,7 @@ def pipe_sreda_fun(message):
     return True
 
 def pipe_category_fun(message):
-    category = str(message)
+    category = str(message.text)
     # Работа с БД
     connection = db.create_connection('ORPD.sqlite', '6')
     zapros = f'UPDATE pipe SET pipe_category="{category}" WHERE telegram_id={message.chat.id}'
