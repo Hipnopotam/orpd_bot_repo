@@ -107,9 +107,9 @@ def pipe_skKorr_fun(message, result=' '):
 def pipe_sreda_fun(message):
     sreda = str(message)
     # Работа с БД
-    connection = db.create_connection('ORPD.sqlite', '4')
-    zapros = f'UPDATE pipe SET sreda={sreda} WHERE telegram_id={message.chat.id}'
-    db.execute_query(connection, zapros, 'Скорость коррозии внесение в БД')
+    connection = db.create_connection('ORPD.sqlite', '5')
+    zapros = f'UPDATE pipe SET sreda="{sreda}" WHERE telegram_id={message.chat.id}'
+    db.execute_query(connection, zapros, 'Тип среды внесение в БД')
     connection.close()
     # Конец работы с БД
     return True
@@ -117,9 +117,9 @@ def pipe_sreda_fun(message):
 def pipe_category_fun(message):
     category = str(message)
     # Работа с БД
-    connection = db.create_connection('ORPD.sqlite', '4')
-    zapros = f'UPDATE pipe SET pipe_category={category} WHERE telegram_id={message.chat.id}'
-    db.execute_query(connection, zapros, 'Скорость коррозии внесение в БД')
+    connection = db.create_connection('ORPD.sqlite', '6')
+    zapros = f'UPDATE pipe SET pipe_category="{category}" WHERE telegram_id={message.chat.id}'
+    db.execute_query(connection, zapros, 'Категория среды внесение в БД')
     connection.close()
     # Конец работы с БД
     return True
