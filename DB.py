@@ -99,13 +99,14 @@ CREATE TABLE IF NOT EXISTS pipe (
   rasD TEXT,
   rabT TEXT,
   rasT TEXT,
-  dNom TEXT,
+  nomD TEXT,
   sreda TEXT,
+  skKorr TEXT,
   pipe_category TEXT,
   revizia_pipe TEXT,
   prime4anie TEXT
 );
 """
 # connection = create_connection("ORPD.sqlite")
-execute_query(connection, createPipeTable, 'Проверка БД на существование таблицы pipe')
+execute_query(connection, createPipeTable, 'Проверка БД на существование таблицы Pipe')
 connection.close()
