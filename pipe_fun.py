@@ -51,6 +51,29 @@ def pipe_final_fun(message):
     z ,= db.execute_read_query(connection, q)
     # (8, 48691773, 'Alexey N.', '1.0', '2.0', '3.0', '4.0', '5.0', 'Пар', '6.0', 'ТГ или НГ', None, 'no_active')
     _, user_id, user_name, rabD, rasD, rabT, rasT, nomD, sreda, skKorr, pipe_category, *_ = z
+
+    if 'Класс 1' in pipe_category:
+        category = 'I А (а)'
+    elif 'Класс 3' in pipe_category and rabD>2.5 and (rabT>300 or rabT<-40):
+        category = 'I А (б)'
+    elif 'Класс 3' in pipe_category and rabD<-0.08:
+        category = 'I А (б)'
+    elif 'Класс 3' in pipe_category and -0.08<=rabD<=2.5 and -40<=rabT<=300:
+        category = 'II А (б)'
+    elif 'ГГ' in pipe_category and rabD>2.5 and (rabT>300 or rabT<-40):
+        category = 'I Б (а)'
+    elif 'ГГ' in pipe_category and rabD<-0.08:
+        category = 'I Б (а)'
+    elif 'ГГ' in pipe_category and -0.08<=rabD<=2.5 and -40<=rabT<=300:
+        category = 'II Б (а)'
+    elif 'ЛВЖ' in pipe_category and rabD>2.5 and (rabT>300 or rabT<-40):
+        category = 'I Б (б)'
+    elif 'ЛВЖ' in pipe_category and rabD<-0.08:
+        category = 'I Б (б)'
+    elif 'ЛВЖ' in pipe_category and 1.6<rabD<=2.5 and rabT<300
+        category = 'II Б (б)'
+    else: category = 'V В'
+
     result = f'''
 Трубопровод
 
@@ -62,6 +85,8 @@ def pipe_final_fun(message):
 Скорость коррозии - {skKorr} мм/год,
 Тип среды - {sreda},
 Категория среды - {pipe_category}
+
+Категория трубопровода - <b>{category}</b>
 '''
     connection.close()
     return result

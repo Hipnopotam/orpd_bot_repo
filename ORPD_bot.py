@@ -256,11 +256,17 @@ def pipe_skKorr_fun(message):
 def pipe_sreda_fun(message):
     pf.pipe_text_fun(message, 'sreda')
     markup6 = types.InlineKeyboardMarkup()
-    pipe_button_toxic = types.InlineKeyboardButton(text = 'Токсичная, Класс 1, Класс 2, Класс 3', callback_data='toxic')
-    pipe_button_fire = types.InlineKeyboardButton(text = 'Взрывопожароопасные, ГГ или СУГ, ЛВЖ, ГЖ', callback_data='fire')
+    pipe_button_toxic12 = types.InlineKeyboardButton(text = 'Токсичная: Класс 1, Класс 2', callback_data='toxic_12')
+    pipe_button_toxic3 = types.InlineKeyboardButton(text = 'Токсичная: Класс 3', callback_data='toxic_3')
+    pipe_button_gg_sug = types.InlineKeyboardButton(text = 'Взрывопожароопасные: ГГ или СУГ', callback_data='gg_sug')
+    pipe_button_lvj = types.InlineKeyboardButton(text = 'Взрывопожароопасные: ЛВЖ, ГЖ', callback_data='lvj')
+    pipe_button_gj = types.InlineKeyboardButton(text = 'Взрывопожароопасные: ГЖ', callback_data='gj')
     pipe_button_not_fire = types.InlineKeyboardButton(text = 'ТГ или НГ', callback_data='not_fire')
-    markup6.add(pipe_button_toxic)
-    markup6.add(pipe_button_fire)
+    markup6.add(pipe_button_toxic12)
+    markup6.add(pipe_button_toxic3)
+    markup6.add(pipe_button_gg_sug)
+    markup6.add(pipe_button_lvj)
+    markup6.add(pipe_button_gj)
     markup6.add(pipe_button_not_fire)
     bot.send_message(message.chat.id, 'Введите группу среды:', parse_mode='html', reply_markup=markup6)
 
@@ -272,7 +278,7 @@ def pipe_category_fun(message):
 
 def pipe_final_fun(message):
     result = pf.pipe_final_fun(message)
-    bot.send_message(message.chat.id, f'Результат: \n\n {result}')
+    bot.send_message(message.chat.id, f'Результат: \n\n {result}', parse_mode='html')
 
 #########^^^^^^^^^^ Конец расчета трубопроводов ^^^^^^^^^^#########
 
@@ -403,12 +409,19 @@ def response(function_call):
         elif function_call.data == 'liquid':
             mess = bot.send_message(function_call.message.chat.id, 'Жидкость')
             pipe_sreda_fun(mess)
-        elif function_call.data == 'toxic':
-            mess = bot.send_message(function_call.message.chat.id, 'Токсичные, Класс 1, Класс 2, Класс 3')
+        elif function_call.data == 'toxic_12':
+            mess = bot.send_message(function_call.message.chat.id, 'Токсичные: Класс 1, Класс 2')
             pipe_category_fun(mess)
-        elif function_call.data == 'fire':
-            mess = bot.send_message(function_call.message.chat.id, 'Взрывопожароопасные, ГГ или СУГ, ЛВЖ, ГЖ')
+        elif function_call.data == 'toxic_3':
+            mess = bot.send_message(function_call.message.chat.id, 'Токсичные: Класс 3')
             pipe_category_fun(mess)
+        elif function_call.data == 'gg_sug':
+            mess = bot.send_message(function_call.message.chat.id, 'Взрывопожароопасные: ГГ или СУГ')
+            pipe_category_fun(mess)
+        elif function_call.data == 'lvj':
+            mess = bot.send_message(function_call.message.chat.id, 'Взрывопожароопасные: ЛВЖ')
+        elif function_call.data == 'gj':
+            mess = bot.send_message(function_call.message.chat.id, 'Взрывопожароопасные: ГЖ')
         elif function_call.data == 'not_fire':
             mess = bot.send_message(function_call.message.chat.id, 'ТГ или НГ')
             pipe_category_fun(mess)
