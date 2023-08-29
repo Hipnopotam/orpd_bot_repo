@@ -293,7 +293,8 @@ def test_request_fun(message):
     except:
         data='1982-03-29'
     if ch!=[] and str(date.today())<data:
-        return [f'Ваша подписка действует до {data}\n\nДля продолжения введите /start',' ']
+        bot.send_message(message.chat.id, f'Ваша подписка действует до {data}\n\nДля продолжения введите /start')
+        return
     
     markup2 = types.InlineKeyboardMarkup()
     button_month = types.InlineKeyboardButton(text = '1 месяц', callback_data='month')
