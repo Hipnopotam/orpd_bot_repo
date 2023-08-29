@@ -19,6 +19,20 @@ gruppaSr - группа среды:
 '''
 
 
+def pipe_digit_fun(message, param_name, result=' '):
+    param = str(message.text)
+    if fun.check_digit(param) != False:
+        param = float(fun.zapyataya(param))
+        # Работа с БД
+        connection = db.create_connection('ORPD.sqlite', param_name)
+        zapros = f'UPDATE pipe SET {param_name}={param} WHERE telegram_id={message.chat.id}'
+        db.execute_query(connection, zapros, f'{param_name} внесение в БД')
+        connection.close()
+        # Конец работы с БД
+        return result
+    else:
+        return None
+
 def pipe_rabD_fun(message, result=' '):
     rabD = str(message.text)
     if fun.check_digit(rabD) != False:

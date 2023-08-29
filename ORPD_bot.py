@@ -179,7 +179,12 @@ def pribavka_fun(message):
 
 ###########^^^^^^^^^^^^ Конец расчета Сосудов ^^^^^^^^^^^^###########
 
+
+
+####################################################################
 #########^^^^^^^^^^ Начало расчета трубопроводов ^^^^^^^^^^#########
+
+
 #при вводе activate
 @bot.message_handler(commands=['pipe'])
 def pipe_start(message):
@@ -188,7 +193,8 @@ def pipe_start(message):
     bot.register_next_step_handler(num1, pipe_rabD_fun)
 
 def pipe_rabD_fun(message):
-    rabD = pf.pipe_rabD_fun(message)
+    # rabD = pf.pipe_rabD_fun(message)
+    rabD = pf.pipe_digit_fun(message, 'rabD')
     if rabD == None:
         mess = bot.send_message(message.chat.id, 'Введите рабочее давление цифрами, МПа:')
         bot.register_next_step_handler(mess, pipe_rabD_fun)
@@ -197,7 +203,8 @@ def pipe_rabD_fun(message):
         bot.register_next_step_handler(mess, pipe_rasD_fun)
 
 def pipe_rasD_fun(message):
-    rasD = pf.pipe_rasD_fun(message)
+    # rasD = pf.pipe_rasD_fun(message)
+    rasD = pf.pipe_digit_fun(message, 'rasD')
     if rasD == None:
         mess = bot.send_message(message.chat.id, 'Введите расчетное давление цифрами, МПа:')
         bot.register_next_step_handler(mess, pipe_rasD_fun)
@@ -206,7 +213,8 @@ def pipe_rasD_fun(message):
         bot.register_next_step_handler(mess, pipe_rabT_fun)
 
 def pipe_rabT_fun(message):
-    rabT = pf.pipe_rabT_fun(message)
+    # rabT = pf.pipe_rabT_fun(message)
+    rabT = pf.pipe_digit_fun(message, 'rabT')
     if rabT == None:
         mess = bot.send_message(message.chat.id, 'Введите рабочую температуру цифрами, МПа:')
         bot.register_next_step_handler(mess, pipe_rasD_fun)
@@ -215,7 +223,8 @@ def pipe_rabT_fun(message):
         bot.register_next_step_handler(mess, pipe_rasT_fun)
 
 def pipe_rasT_fun(message):
-    rasT = pf.pipe_rasT_fun(message)
+    # rasT = pf.pipe_rasT_fun(message)
+    rasT = pf.pipe_digit_fun(message, 'rasT')
     if rasT == None:
         mess = bot.send_message(message.chat.id, 'Введите расчетную температуру цифрами, МПа')
         bot.register_next_step_handler(mess, pipe_rasT_fun)
@@ -224,7 +233,8 @@ def pipe_rasT_fun(message):
         bot.register_next_step_handler(mess, pipe_nomD_fun)
     
 def pipe_nomD_fun(message):
-    nomD = pf.pipe_nomD_fun(message)
+    # nomD = pf.pipe_nomD_fun(message)
+    nomD = pf.pipe_digit_fun(message, 'nomD')
     if nomD == None:
         mess = bot.send_message(message.chat.id, 'Введите номинальный диаметр цифрами, мм')
         bot.register_next_step_handler(mess, pipe_nomD_fun)
@@ -234,6 +244,7 @@ def pipe_nomD_fun(message):
 
 def pipe_skKorr_fun(message):
     skKorr = pf.pipe_skKorr_fun(message)
+    skKorr = pf.pipe_digit_fun(message, 'skKorr')
     if skKorr == None:
         mess = bot.send_message(message.chat.id, 'Введите скорость коррозии цифрами, мм/год')
         bot.register_next_step_handler(mess, pipe_skKorr_fun)
