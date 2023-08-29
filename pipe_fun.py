@@ -68,7 +68,7 @@ def pipe_rasT_fun(message, result=' '):
         rasT = float(fun.zapyataya(rasT))
         # Работа с БД
         connection = db.create_connection('ORPD.sqlite', '3')
-        zapros = f'UPDATE pipe SET rabT={rasT} WHERE telegram_id={message.chat.id}'
+        zapros = f'UPDATE pipe SET rasT={rasT} WHERE telegram_id={message.chat.id}'
         db.execute_query(connection, zapros, 'Расчетная температура внесение в БД')
         connection.close()
         # Конец работы с БД
