@@ -85,7 +85,7 @@ gruppaSr - группа среды:
 В - ТГ или НГ
 '''
 
-deletePipeTable = 'drop table pipe'
+# deletePipeTable = 'drop table pipe'
 # connection = create_connection("ORPD.sqlite")
 # execute_query(connection, deletePipeTable)
 # connection.close()
@@ -96,16 +96,16 @@ CREATE TABLE IF NOT EXISTS pipe (
   telegram_id INTEGER,
   name TEXT,
   rabD TEXT,
-  rasD TEXT
+  rasD TEXT,
   rabT TEXT,
   rasT TEXT,
   dNom TEXT,
   sreda TEXT,
   pipe_category TEXT,
-  revizia_pipe TEXT
+  revizia_pipe TEXT,
   prime4anie TEXT
 );
 """
 # connection = create_connection("ORPD.sqlite")
-execute_query(connection, createPipeTable)
+execute_query(connection, createPipeTable, 'Проверка БД на существование таблицы pipe')
 connection.close()
