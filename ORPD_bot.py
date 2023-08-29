@@ -193,7 +193,6 @@ def pipe_start(message):
     bot.register_next_step_handler(num1, pipe_rabD_fun)
 
 def pipe_rabD_fun(message):
-    # rabD = pf.pipe_rabD_fun(message)
     rabD = pf.pipe_digit_fun(message, 'rabD')
     if rabD == None:
         mess = bot.send_message(message.chat.id, 'Введите рабочее давление цифрами, МПа:')
@@ -203,7 +202,6 @@ def pipe_rabD_fun(message):
         bot.register_next_step_handler(mess, pipe_rasD_fun)
 
 def pipe_rasD_fun(message):
-    # rasD = pf.pipe_rasD_fun(message)
     rasD = pf.pipe_digit_fun(message, 'rasD')
     if rasD == None:
         mess = bot.send_message(message.chat.id, 'Введите расчетное давление цифрами, МПа:')
@@ -213,7 +211,6 @@ def pipe_rasD_fun(message):
         bot.register_next_step_handler(mess, pipe_rabT_fun)
 
 def pipe_rabT_fun(message):
-    # rabT = pf.pipe_rabT_fun(message)
     rabT = pf.pipe_digit_fun(message, 'rabT')
     if rabT == None:
         mess = bot.send_message(message.chat.id, 'Введите рабочую температуру цифрами, МПа:')
@@ -223,7 +220,6 @@ def pipe_rabT_fun(message):
         bot.register_next_step_handler(mess, pipe_rasT_fun)
 
 def pipe_rasT_fun(message):
-    # rasT = pf.pipe_rasT_fun(message)
     rasT = pf.pipe_digit_fun(message, 'rasT')
     if rasT == None:
         mess = bot.send_message(message.chat.id, 'Введите расчетную температуру цифрами, МПа')
@@ -233,7 +229,6 @@ def pipe_rasT_fun(message):
         bot.register_next_step_handler(mess, pipe_nomD_fun)
     
 def pipe_nomD_fun(message):
-    # nomD = pf.pipe_nomD_fun(message)
     nomD = pf.pipe_digit_fun(message, 'nomD')
     if nomD == None:
         mess = bot.send_message(message.chat.id, 'Введите номинальный диаметр цифрами, мм')
@@ -243,7 +238,6 @@ def pipe_nomD_fun(message):
         bot.register_next_step_handler(mess, pipe_skKorr_fun)
 
 def pipe_skKorr_fun(message):
-    # skKorr = pf.pipe_skKorr_fun(message)
     skKorr = pf.pipe_digit_fun(message, 'skKorr')
     if skKorr == None:
         mess = bot.send_message(message.chat.id, 'Введите скорость коррозии цифрами, мм/год')
@@ -259,7 +253,6 @@ def pipe_skKorr_fun(message):
         bot.send_message(message.chat.id, 'Введите тип среды:', parse_mode='html', reply_markup=markup5)
 
 def pipe_sreda_fun(message):
-    # pf.pipe_sreda_fun(message)
     pf.pipe_text_fun(message, 'sreda')
     markup6 = types.InlineKeyboardMarkup()
     pipe_button_toxic = types.InlineKeyboardButton(text = 'Токсичные, Класс 1, Класс 2, Класс 3', callback_data='toxic')
@@ -272,15 +265,13 @@ def pipe_sreda_fun(message):
 
 def pipe_category_fun(message):
     pf.pipe_text_fun(message, 'pipe_category')
-    connection = db.create_connection('ORPD.sqlite')
-    q = 'select * from pipe'
-    z = db.execute_read_query(connection, q)
-    print (z)
-    connection.close()
+    pipe_final_fun(message)
+    
    
 
 def pipe_final_fun(message):
-    pass
+    result = pf.pipe_final_fun(message)
+    bot.send_message(message.chat.id, f'Результат: \n\n {result}')
 
 #########^^^^^^^^^^ Конец расчета трубопроводов ^^^^^^^^^^#########
 
