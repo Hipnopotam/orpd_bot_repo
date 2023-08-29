@@ -255,7 +255,7 @@ def pipe_sreda_fun(message):
     bot.send_message(message.chat.id, 'Введите группу среды:', parse_mode='html', reply_markup=markup6)
 
 def pipe_category_fun(message):
-    gruppa = pf.pipe_gruppa_fun(message)
+    gruppa = pf.pipe_category_fun(message)
     connection = db.create_connection('ORPD.sqlite')
     q = 'select * from pipe'
     z = db.execute_query(connection, q)
