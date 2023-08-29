@@ -70,7 +70,7 @@ def pipe_final_fun(message):
         category = 'I Б (б)'
     elif 'ЛВЖ' in pipe_category and rabD<-0.08:
         category = 'I Б (б)'
-    elif 'ЛВЖ' in pipe_category and 1.6<rabD<=2.5 and rabT<300
+    elif 'ЛВЖ' in pipe_category and 1.6<rabD<=2.5 and rabT<300:
         category = 'II Б (б)'
     else: category = 'V В'
 
@@ -86,7 +86,7 @@ def pipe_final_fun(message):
 Тип среды - {sreda},
 Категория среды - {pipe_category}
 
-Категория трубопровода - <b>{category}</b>
+Категория трубопровода - <b>{category}</b>.
 '''
     connection.close()
     return result
