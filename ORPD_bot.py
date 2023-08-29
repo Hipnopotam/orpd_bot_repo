@@ -258,7 +258,7 @@ def pipe_category_fun(message):
     gruppa = pf.pipe_category_fun(message)
     connection = db.create_connection('ORPD.sqlite')
     q = 'select * from pipe'
-    z = db.execute_query(connection, q)
+    z = db.execute_read_query(connection, q)
     print (z)
     connection.close()
    
