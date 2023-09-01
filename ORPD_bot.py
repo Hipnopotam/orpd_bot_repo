@@ -171,7 +171,7 @@ def pribavka_fun(message):
 Постановка на учет в РТН - {user_rtn}
 '''
         bot.send_message(message.chat.id, final_message, parse_mode='HTML')
-        bot.send_message(message.chat.id, pribavka, parse_mode='HTML')
+        bot.send_message(message.chat.id, pribavka)
 
         #Очистка запросов из БД
         ochistka=f'DELETE FROM ras4et WHERE telegram_id={message.chat.id}'
