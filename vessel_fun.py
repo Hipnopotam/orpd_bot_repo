@@ -253,7 +253,7 @@ def pribavka_fun(message):
         pribavka=float(fun.zapyataya(pribavka))
         skKorr=round(pribavka/srok,4)
 
-        result = f'Расчетная скорость коррозии: <b>{skKorr}</b> мм/год'
+        result = f'Расчетная скорость коррозии: {skKorr} мм/год'
         #работа с БД
         zapros=f"UPDATE ras4et SET pribavka='{pribavka}', skKorr='{skKorr}' WHERE telegram_id={message.chat.id}"
         db.execute_query(connection, zapros, 'Прибавка и ск. корр. внесение в БД')
