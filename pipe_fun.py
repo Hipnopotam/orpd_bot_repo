@@ -39,7 +39,7 @@ def pipe_text_fun(message, param_name):
     # Работа с БД
     connection = db.create_connection('ORPD.sqlite', param_name)
     zapros = f'UPDATE pipe SET {param_name}="{param}" WHERE telegram_id={message.chat.id}'
-    db.execute_query(connection, zapros, 'param_name внесение в БД')
+    db.execute_query(connection, zapros, f'{param_name} внесение в БД')
     connection.close()
     # Конец работы с БД
     return True

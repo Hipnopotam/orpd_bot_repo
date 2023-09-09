@@ -2,73 +2,48 @@ import functions as fun
 import DB as db
 from tabulate import tabulate
 
+def update_db_text_fun(message, param_name, warning=' '):
+    param = str(message.text)
+    # Работа с БД
+    connection = db.create_connection('ORPD.sqlite', param_name)
+    zapros = f'UPDATE ras4et SET {param_name}="{param}" WHERE telegram_id={message.chat.id}'
+    db.execute_query(connection, zapros, f'{param_name} внесение в БД')
+    connection.close()
+    # Конец работы с БД
+    return True
 
-def rabD_fun(message, warning=' '):
-    # print(message.chat.id)
-    rabD= str(message.text)
-    if fun.check_digit(rabD)!=False:
-        p=fun.zapyataya(rabD)
-        rabD=float(p)
-        #работа с БД
-        connection = db.create_connection("ORPD.sqlite", '1')
-        zapros=f'UPDATE ras4et SET rabD={rabD} WHERE telegram_id={message.chat.id}'
-        db.execute_query(connection, zapros, 'рабочее давление внесение в БД')
+def update_db_digit_fun(message, param_name, warning=' '):
+    param = str(message.text)
+    if fun.check_digit(param) != False:
+        param = float(fun.zapyataya(param))
+        # Работа с БД
+        connection = db.create_connection('ORPD.sqlite', param_name)
+        zapros = f'UPDATE ras4et SET {param_name}={param} WHERE telegram_id={message.chat.id}'
+        db.execute_query(connection, zapros, f'{param_name} внесение в БД')
         connection.close()
-        #конец работы с БД
+        # Конец работы с БД
         return warning
     else:
-        warning = 'Введите рабочее давление цифрами, МПа:'
         return None
     
-def rabT_fun(message, warning=' '):
-    rabT = str(message.text)
-    if fun.check_digit(rabT)!=False:
-        p=fun.zapyataya(rabT)
-        rabT=float(p)
-        #работа с БД
-        connection = db.create_connection("ORPD.sqlite",'2')
-        zapros=f'UPDATE ras4et SET rabT={rabT} WHERE telegram_id={message.chat.id}'
-        db.execute_query(connection, zapros, 'рабочая температура внесение в БД')
-        connection.close()
-        #конец работы с БД
-        return warning
-    else:
-        warning = 'Введите рабочую температуру цифрами, C'
-        return None
-    
-def obem_fun(message, warning=' '):
-    t=message.text
-    if t=='газ':
-        tKip=float(0)
-        sreda=t
-        warning = 'Введите объем сосуда, м3:'
-    elif t=='вода':
-        tKip=115
-        sreda=t
-        warning = 'Введите объем сосуда, м3:'
-    else:
-        tKip=str(t)
-        sreda='жидкость'
-        if fun.check_digit(tKip)!=False:
-            tKip=float(fun.zapyataya(tKip))
-            warning = 'Введите объем сосуда, м3:'
-        else:
-            return None
-    #работа с БД
-    connection = db.create_connection("ORPD.sqlite",'3')
-    zapros1=f"UPDATE ras4et SET sreda='{sreda}', tKip='{tKip}' WHERE telegram_id={message.chat.id}"
-    db.execute_query(connection, zapros1, 'среда внесение в БД num4')
-    connection.close()
-    return warning
-    #конец работы с БД
 
-def sreda_jidk_fun(message):
-    #работа с БД
-    connection = db.create_connection("ORPD.sqlite", '1')
-    zapros1=f"UPDATE ras4et SET sreda='жидкость' WHERE telegram_id={message.chat.id}"
-    db.execute_query(connection, zapros1, 'среда внесение в БД num2')
-    connection.close()
-    #конец работы с БД
+def result_fun(message):
+    #Запрос из БД-таблицы ras4et - рабочего давления, среда, темп кипения
+    connection = db.create_connection("ORPD.sqlite",'4')
+    zapros1=f'SELECT rabD, sreda, tKip, rabT, obem FROM ras4et WHERE telegram_id={message.chat.id}'
+    zap=db.execute_read_query(connection,zapros1,'Запрос')
+    header=['рабД','среда','Ткипен', 'РабТ']
+    print(tabulate(zap, headers=header, tablefmt='grid'))
+    rabD=float(zap[0][0])
+    sreda=zap[0][1]
+    tKip=float(zap[0][2])
+    rabT=float(zap[0][3])
+    obem=float(zap[0][4])
+    resultNTD=ntd_fun_result(rabD,obem,rabT,tKip,sreda)
+    ntd, ntdMess = resultNTD
+    t=f'Параметры сосуда:\nРабочее давление - {rabD} МПа, \nРабочая температура - {rabT} С,\nОбъем сосуда - {obem} м3, \nСреда - {sreda}\nПроизведение давления на вместимость - {str(round(rabD*obem,5))}.'
+    result =  t+'\n\n'+ntdMess
+    return result
 
 
 def ntd_fun(message):
@@ -187,7 +162,7 @@ def rtn_fun(message):
     #конец работы с БД
     return rtnMess
 
-
+# +++++++++++++++++++++++++++++++++++++++++++++
 def sos_type_fun(message):
     sosType=str(message.text)
     #работа с БД
@@ -196,8 +171,7 @@ def sos_type_fun(message):
     db.execute_query(connection, zapros, 'Тип сосуда внесение в БД')
     connection.close()
     #конец работы с БД
-    result = 'Введите прибавку на коррозию, мм'
-    return result
+    return True
 
 
 
