@@ -156,10 +156,12 @@ def sk_korr_fun(message):
         num1 = bot.send_message(message.chat.id, 'Введите скорость коррозии цифрами, мм/год')
         bot.register_next_step_handler(num1, sk_korr_fun)
     else:
-        result=vf.result_fun(message)
-        bot.send_message(message.chat.id, result)
+        result_fun(message)
 
-
+def result_fun(message):
+    result=vf.result_fun(message)
+    bot.send_message(message.chat.id, result)
+    print(message.text)
 
 ####################################################################
 #########^^^^^^^^^^ Начало расчета трубопроводов ^^^^^^^^^^#########
