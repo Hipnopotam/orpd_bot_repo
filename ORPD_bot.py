@@ -337,11 +337,11 @@ def response(function_call):
         if function_call.data == "gas":
             num4s='газ'
             num4=bot.send_message(function_call.message.chat.id, num4s)
-            obem_fun(num4)
+            sreda_jidk_fun(num4)
         elif function_call.data == "water":
             num4s='вода'
             num4=bot.send_message(function_call.message.chat.id, num4s)
-            obem_fun(num4)
+            sreda_jidk_fun(num4)
         elif function_call.data == "jidk":
             num4s='жидкость'
             num4=bot.send_message(function_call.message.chat.id, num4s)
