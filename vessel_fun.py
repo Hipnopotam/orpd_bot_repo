@@ -189,7 +189,7 @@ def fnp_fun(ntd,srTRTS,rabT,rabD,obem):
     else:
         rtn=0
         rtnMess='Сосуд на учет в РТН ставить не надо.'
-    rtnMess=rtnMess+'\n\n\nДля расчета периодичности ревизии введите назначенный срок эксплуатации, лет'
+    rtnMess=rtnMess+' '
     result=rtnMess
     return result
 
@@ -265,7 +265,18 @@ nvoRUA0103= ['2 года',  '8 лет',    '4 года',   '8 лет',    '8 л�
 nvoRUA03=   ['1 год',   '8 лет',    '2 года',   '8 лет',    '1 год',    '8 лет',    '2 года',   '8 лет']
 
 
-def revizia_fun(ntd,rtn,skKorr,sosType):
+def revizia_fun(message):
+    connection = db.create_connection("ORPD.sqlite", '9')
+    zapros2=f'SELECT ntd, rtn, sosType, skKorr FROM ras4et WHERE telegram_id={message.chat.id}'
+    zap=db.execute_read_query(connection,zapros2,'Запрос')
+    header=['НТД', 'РТН', 'тип сосуда', 'срок']
+    
+    print(tabulate(zap, headers=header, tablefmt='grid'))
+    ntd=zap[0][0]
+    rtn=int(zap[0][1])
+    sosType=zap[0][2]
+    skKorr=float(zap[0][3])
+
     # ФНП
     if ntd=='ФНП' and rtn==0 and skKorr<=0.1 and sosType=='Сосуд':
         resultRevizia= f'Периодичность проведения НВО:\nОтветственным - раз в {nvoFNP[0][0]}\n\nПериодичность проведения ГИ:\nРаз в - {nvoFNP[1][0]}'

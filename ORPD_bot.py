@@ -163,6 +163,8 @@ def result_fun(message):
     if 'ФНП' in result:
         rtn = vf.rtn_fun(message)
         bot.send_message(message.chat.id, rtn)
+    revizia = vf.revizia_fun(message)
+    bot.send_message(message.chat.id, revizia)
 
 ####################################################################
 #########^^^^^^^^^^ Начало расчета трубопроводов ^^^^^^^^^^#########
