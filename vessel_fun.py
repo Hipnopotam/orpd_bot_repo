@@ -32,7 +32,7 @@ def result_fun(message):
     connection = db.create_connection("ORPD.sqlite",'4')
     zapros1=f'SELECT rabD, sreda, tKip, rabT, obem FROM ras4et WHERE telegram_id={message.chat.id}'
     zap=db.execute_read_query(connection,zapros1,'Запрос')
-    header=['рабД','среда','Ткипен', 'РабТ']
+    header=['Среда','Т Кипен','РабТ', 'Объем']
     print(tabulate(zap, headers=header, tablefmt='grid'))
     rabD=float(zap[0][0])
     sreda=zap[0][1]
@@ -88,7 +88,7 @@ def ntd_fun(message):
 
         if ntd!='ФНП' and podpiska!='no_active': #Дописать проверку на активную подписку
             result_fnp = fnp_fun(ntd,0,rabT,rabD,obem)
-            result_ntd = ntd_fun_result(rabD,obem,rabT,tKip,sreda)
+            # result_ntd = ntd_fun_result(rabD,obem,rabT,tKip,sreda)
             # r=bot.send_message(message.chat.id, result[1], parse_mode='html')
             #работа с БД
             connection = db.create_connection("ORPD.sqlite",'5')

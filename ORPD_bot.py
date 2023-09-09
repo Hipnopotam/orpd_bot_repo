@@ -159,7 +159,10 @@ def sk_korr_fun(message):
 def result_fun(message):
     result=vf.result_fun(message)
     bot.send_message(message.chat.id, result)
-    print(message.text, '- result')
+    print(result, '- result')
+    if 'ФНП' in result:
+        rtn = vf.rtn_fun(message)
+        bot.send_message(message.chat.id, rtn)
 
 ####################################################################
 #########^^^^^^^^^^ Начало расчета трубопроводов ^^^^^^^^^^#########
