@@ -103,7 +103,7 @@ def sreda_jidk_fun(message):
         button_2gr = types.InlineKeyboardButton(text = '2 группа', callback_data='gr2')
         mark.add(button_1gr)
         mark.add(button_2gr)
-        # bot.send_message(message.chat.id, ntd, reply_markup=mark)
+        bot.send_message(message.chat.id, 'Выберете группы среды по ТР ТС 032/2013', reply_markup=mark)
 
 def sreda_TRTS_fun(message):
     vf.update_db_text_fun(message, 'srTRTS')
