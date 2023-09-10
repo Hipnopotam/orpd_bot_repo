@@ -404,8 +404,10 @@ def response(function_call):
             pipe_category_fun(mess)
         elif function_call.data == 'lvj':
             mess = bot.send_message(function_call.message.chat.id, 'Взрывопожароопасные: ЛВЖ')
+            pipe_category_fun(mess)
         elif function_call.data == 'gj':
             mess = bot.send_message(function_call.message.chat.id, 'Взрывопожароопасные: ГЖ')
+            pipe_category_fun(mess)
         elif function_call.data == 'not_fire':
             mess = bot.send_message(function_call.message.chat.id, 'ТГ или НГ')
             pipe_category_fun(mess)
