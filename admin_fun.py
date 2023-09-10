@@ -57,7 +57,7 @@ def activate_by_admin(message):
     #print(message)
     promoCode=activate.promo_code_check_fun(message[1])
     connection = db.create_connection("ORPD.sqlite", 'Подключение для активации подписки админом')
-    quer=f'UPDATE users SET podpiska_do="{promoCode}" WHERE telegram_id={userID}'
+    quer=f"UPDATE users SET podpiska_do='{promoCode}' WHERE telegram_id={userID}; UPDATE ras4et SET prime4anie='active' WHERE telegram_id={userID}; UPDATE pipe SET prime4anie='active' WHERE telegram_id={userID};"
     db.execute_query(connection,quer,'Активация админом')
     connection.close()
     message_for_user = f'Вы получили подтверждение доната и активации, калькулятор будет работать без ограничений до <b>{promoCode}</b>.\n\nДля начала введите /start'
