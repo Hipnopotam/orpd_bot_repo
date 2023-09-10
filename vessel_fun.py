@@ -45,9 +45,9 @@ def update_db_digit_fun(message, param_name, warning=' '):
 def result_fun(message):
     #Запрос из БД-таблицы ras4et - рабочего давления, среда, темп кипения
     connection = db.create_connection("ORPD.sqlite",'4')
-    zapros1=f'SELECT rabD, sreda, tKip, rabT, obem, skKorr, srTRTS, ntd, rtn FROM ras4et WHERE telegram_id={message.chat.id}'
+    zapros1=f'SELECT rabD, sreda, tKip, rabT, obem, skKorr, srTRTS FROM ras4et WHERE telegram_id={message.chat.id}'
     zap=db.execute_read_query(connection,zapros1,'Запрос')
-    header=['раб Давл','среда','темп кип', 'раб темп', 'объем', 'ск корр', 'группа среды ТР ТС', 'НТД', 'РТН']
+    header=['раб Давл','среда','темп кип', 'раб темп', 'объем', 'ск корр', 'группа среды ТР ТС']
     print(tabulate(zap, headers=header, tablefmt='grid'))
     rabD=float(zap[0][0])
     sreda=zap[0][1]
@@ -164,8 +164,8 @@ def revizia_fun(message):
     connection = db.create_connection("ORPD.sqlite", '9')
     zapros2=f'SELECT ntd, rtn, sosType, skKorr FROM ras4et WHERE telegram_id={message.chat.id}'
     zap=db.execute_read_query(connection,zapros2,'Запрос')
-    # header=['НТД', 'РТН', 'тип сосуда', 'скорость коррозии']
-    # print(tabulate(zap, headers=header, tablefmt='grid'))
+    header=['НТД', 'РТН', 'тип сосуда', 'скорость коррозии']
+    print(tabulate(zap, headers=header, tablefmt='grid'))
     ntd=zap[0][0]
     rtn=int(zap[0][1])
     sosType=zap[0][2]
