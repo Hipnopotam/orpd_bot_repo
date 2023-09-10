@@ -30,7 +30,7 @@ def update_db_digit_fun(message, param_name, warning=' '):
 def result_fun(message):
     #Запрос из БД-таблицы ras4et - рабочего давления, среда, темп кипения
     connection = db.create_connection("ORPD.sqlite",'4')
-    zapros1=f'SELECT rabD, sreda, tKip, rabT, obem FROM ras4et WHERE telegram_id={message.chat.id}'
+    zapros1=f'SELECT rabD, sreda, tKip, rabT, obem, skKorr FROM ras4et WHERE telegram_id={message.chat.id}'
     zap=db.execute_read_query(connection,zapros1,'Запрос')
     header=['Среда','Т Кипен','РабТ', 'Объем']
     print(tabulate(zap, headers=header, tablefmt='grid'))
@@ -39,9 +39,17 @@ def result_fun(message):
     tKip=float(zap[0][2])
     rabT=float(zap[0][3])
     obem=float(zap[0][4])
+    skKorr = float(zap[0][5])
     resultNTD=ntd_fun_result(rabD,obem,rabT,tKip,sreda)
     ntd, ntdMess = resultNTD
-    t=f'Параметры сосуда:\nРабочее давление - {rabD} МПа, \nРабочая температура - {rabT} С,\nОбъем сосуда - {obem} м3, \nСреда - {sreda}\nПроизведение давления на вместимость - {str(round(rabD*obem,5))}.'
+    t=f'''
+    Параметры сосуда:
+    Рабочее давление - {rabD} МПа, 
+    Рабочая температура - {rabT} С,
+    Объем сосуда - {obem} м3, 
+    Среда - {sreda},
+    Произведение давления на вместимость - {str(round(rabD*obem,5))},
+    Скорость коррозии - {skKorr} мм/год'''
     result =  t+'\n\n'+ntdMess
     zapros2 = f"UPDATE ras4et SET ntd='{ntd}' WHERE telegram_id={message.chat.id}"
     db.execute_query(connection, zapros2, f'НТД - {ntd} внесение в БД')
@@ -81,7 +89,7 @@ def rtn_fun(message):
     connection = db.create_connection("ORPD.sqlite", '6')
     zapros=f'SELECT rabT, obem, ntd, rabD, srTRTS FROM ras4et WHERE telegram_id={message.chat.id}'
     zap=db.execute_read_query(connection,zapros,'Запрос')
-    header=['РабТ', 'объем', 'НТД', 'рабД', 'подписку']
+    header=['РабТ', 'объем', 'НТД', 'рабД', 'группа среды по ТР ТС']
     print(tabulate(zap, headers=header,tablefmt='grid'))
     rabT=float(zap[0][0])
     obem=float(zap[0][1])
