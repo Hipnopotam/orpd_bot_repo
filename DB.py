@@ -15,13 +15,15 @@ CREATE TABLE IF NOT EXISTS ras4et (
   ntd TEXT,
   srTRTS TEXT,
   rtn TEXT,
-  srok TEXT,
+  
   sosType TEXT,
-  pribavka TEXT,
+  
   skKorr TEXT,
   prime4anie TEXT
 );
 """
+# srok TEXT,
+# pribavka TEXT,
 
 #Создание соединения к БД
 def create_connection(path, mess="Подключение к БД SQLite - успешно"):
