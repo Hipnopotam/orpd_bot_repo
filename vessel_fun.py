@@ -19,12 +19,12 @@ def update_db_digit_fun(message, param_name, warning=' '):
         tKip ,= db.execute_read_query(connection, zapros1)
         if tKip[0] == 'газ':
             param = '0'
-            print('газ')
+            # print('газ')
         elif tKip[0] == 'вода':
             param = '115'
-            print('вода')
+            # print('вода')
         else:
-            print('жидксоть')
+            # print('жидксоть')
             param = str(message.text)
     else:
         param = str(message.text)
@@ -45,9 +45,9 @@ def update_db_digit_fun(message, param_name, warning=' '):
 def result_fun(message):
     #Запрос из БД-таблицы ras4et - рабочего давления, среда, темп кипения
     connection = db.create_connection("ORPD.sqlite",'4')
-    zapros1=f'SELECT rabD, sreda, tKip, rabT, obem, skKorr FROM ras4et WHERE telegram_id={message.chat.id}'
+    zapros1=f'SELECT rabD, sreda, tKip, rabT, obem, skKorr, srTRTS, ntd, rtn FROM ras4et WHERE telegram_id={message.chat.id}'
     zap=db.execute_read_query(connection,zapros1,'Запрос')
-    header=['раб Давл','среда','темп кип', 'раб темп', 'объем', 'ск корр']
+    header=['раб Давл','среда','темп кип', 'раб темп', 'объем', 'ск корр', 'группа среды ТР ТС', 'НТД', 'РТН']
     print(tabulate(zap, headers=header, tablefmt='grid'))
     rabD=float(zap[0][0])
     sreda=zap[0][1]
@@ -104,15 +104,15 @@ def rtn_fun(message):
     connection = db.create_connection("ORPD.sqlite", '6')
     zapros=f'SELECT rabT, obem, ntd, rabD, srTRTS FROM ras4et WHERE telegram_id={message.chat.id}'
     zap=db.execute_read_query(connection,zapros,'Запрос')
-    header=['РабТ', 'объем', 'НТД', 'рабД', 'группа среды по ТР ТС']
-    print(tabulate(zap, headers=header,tablefmt='grid'))
+    # header=['РабТ', 'объем', 'НТД', 'рабД', 'группа среды по ТР ТС']
+    # print(tabulate(zap, headers=header,tablefmt='grid'))
     rabT=float(zap[0][0])
     obem=float(zap[0][1])
     ntd=zap[0][2]
     rabD=float(zap[0][3])
     skKorr=str(message.text)
     srTRTS=str(zap[0][4])
-    print(ntd,srTRTS,rabT,rabD,obem, 'FNP_FUN') #ФНП 0.1 202.0 1.0 3.0 FNP_FUN
+    # print(ntd,srTRTS,rabT,rabD,obem, 'FNP_FUN') #ФНП 0.1 202.0 1.0 3.0 FNP_FUN
     result=fnp_fun(ntd,srTRTS,rabT,rabD,obem)
     rtnMess=result
     if 'не надо'in rtnMess:
@@ -164,9 +164,8 @@ def revizia_fun(message):
     connection = db.create_connection("ORPD.sqlite", '9')
     zapros2=f'SELECT ntd, rtn, sosType, skKorr FROM ras4et WHERE telegram_id={message.chat.id}'
     zap=db.execute_read_query(connection,zapros2,'Запрос')
-    header=['НТД', 'РТН', 'тип сосуда', 'скорость коррозии']
-    
-    print(tabulate(zap, headers=header, tablefmt='grid'))
+    # header=['НТД', 'РТН', 'тип сосуда', 'скорость коррозии']
+    # print(tabulate(zap, headers=header, tablefmt='grid'))
     ntd=zap[0][0]
     rtn=int(zap[0][1])
     sosType=zap[0][2]
