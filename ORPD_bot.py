@@ -95,7 +95,6 @@ def sreda_jidk_fun(message):
     # vf.sreda_jidk_fun(message) # text
     vf.update_db_text_fun(message, 'sreda')
     mark = types.InlineKeyboardMarkup()
-
     if 'вода' not in message.text:
         button_1gr = types.InlineKeyboardButton(text = '1 группа', callback_data='gr1')
         mark.add(button_1gr)
@@ -162,7 +161,7 @@ def result_fun(message):
     print(result, '- result')
     rtn = vf.rtn_fun(message)
     bot.send_message(message.chat.id, rtn)
-    revizia = vf.revizia_fun(message)
+    revizia = vf.revizia_fun(message) + '\n\n Для продолжения введите /vessel.\nИли введите /start'
     bot.send_message(message.chat.id, revizia)
 
 ####################################################################
