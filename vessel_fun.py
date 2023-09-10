@@ -43,72 +43,10 @@ def result_fun(message):
     ntd, ntdMess = resultNTD
     t=f'Параметры сосуда:\nРабочее давление - {rabD} МПа, \nРабочая температура - {rabT} С,\nОбъем сосуда - {obem} м3, \nСреда - {sreda}\nПроизведение давления на вместимость - {str(round(rabD*obem,5))}.'
     result =  t+'\n\n'+ntdMess
-    zapros2 = f"UPDATE ras4et set ntd='{ntd}' WHERE telegram_id={message.chat.id}"
-    db.execute_query(connection, zapros2, 'НТД внесение в БД')
+    zapros2 = f"UPDATE ras4et SET ntd='{ntd}' WHERE telegram_id={message.chat.id}"
+    db.execute_query(connection, zapros2, f'НТД - {ntd} внесение в БД')
     connection.close()
     return result
-
-
-# def ntd_fun(message):
-#     obem = str(message.text)
-#     if fun.check_digit(obem)==False:
-#         return None
-#     else:
-#         obem=float(fun.zapyataya(obem))
-#         #работа с БД
-#         connection = db.create_connection("ORPD.sqlite",'4')
-#         zapros=f'UPDATE ras4et SET obem={obem} WHERE telegram_id={message.chat.id}'
-#         db.execute_query(connection, zapros, 'объем внесение в БД')
-
-#         #Запрос из БД-таблицы ras4et - рабочего давления, среда, темп кипения
-#         zapros1=f'SELECT rabD, sreda, tKip, rabT, prime4anie FROM ras4et WHERE telegram_id={message.chat.id}'
-#         zap=db.execute_read_query(connection,zapros1,'Запрос')
-#         header=['рабД','среда','Ткипен', 'РабТ', 'подписка']
-#         print(tabulate(zap, headers=header, tablefmt='grid'))
-#         rabD=float(zap[0][0])
-#         sreda=zap[0][1]
-#         tKip=float(zap[0][2])
-#         rabT=float(zap[0][3])
-#         podpiska=zap[0][4]
-
-#         resultNTD=ntd_fun_result(rabD,obem,rabT,tKip,sreda)
-#         ntdMess=resultNTD[1]
-#         # print('ntdMess - ',ntdMess)
-#         ntd=resultNTD[0]
-
-#         t=f'Параметры сосуда:\nРабочее давление - {rabD} МПа, \nРабочая температура - {rabT} С,\nОбъем сосуда - {obem} м3, \nСреда - {sreda}\nПроизведение давления на вместимость - {str(round(rabD*obem,5))}.'
-#         result =  t+'\n\n'+ntdMess
-
-#         zapros=f"UPDATE ras4et SET ntd='{ntd}' WHERE telegram_id={message.chat.id}"
-#         db.execute_query(connection, zapros, 'НТД внесение в БД')
-#         connection.close()
-#         #конец работы с БД
-
-#         if podpiska=='no_active':
-#             result += '\n\nНа этом обзор демо версии окончен. В полной версии вы можете рассчитать периодичность НВО и ГИ, необходимость постановки на учет в РТН.\n\n Для просмотра главного меню введите /start\n\nДля расчета сосудов введите /vessel\n\nДля расчета трубопроводов введите /pipe\n\nДля активации введите /activate'
-#             return result
-        
-
-#         if ntd!='ФНП' and podpiska!='no_active': #Дописать проверку на активную подписку
-#             result_fnp = fnp_fun(ntd,0,rabT,rabD,obem)
-#             # result_ntd = ntd_fun_result(rabD,obem,rabT,tKip,sreda)
-#             # r=bot.send_message(message.chat.id, result[1], parse_mode='html')
-#             #работа с БД
-#             connection = db.create_connection("ORPD.sqlite",'5')
-#             zapros=f"UPDATE ras4et SET rtn='0' WHERE telegram_id={message.chat.id}"
-#             db.execute_query(connection, zapros, 'РТН внесение в БД')
-#             connection.close()
-#             #конец работы с БД
-
-#             result += f"\n\n{result_fnp}"
-#             # print(result, ' -  result')
-#             return result
-
-#         elif ntd=='ФНП' and podpiska!='no_active':
-#             rtnMess='\n\nДля проверки необходимости постановки на учет в РТН введите группу среды по ТР ТС 032:'
-            
-#         result += rtnMess
-#         return result
 
 
 def ntd_fun_result(rabD,obem,rabT,tKip,sreda):
@@ -160,22 +98,10 @@ def rtn_fun(message):
         rtn=1
     #работа с БД
     zapros=f"UPDATE ras4et SET rtn='{rtn}', srTRTS='{srTRTS}' WHERE telegram_id={message.chat.id}"
-    db.execute_query(connection, zapros, 'РТН внесение в БД')
+    db.execute_query(connection, zapros, f'РТН - {rtn} внесение в БД')
     connection.close()
     #конец работы с БД
     return rtnMess
-
-# # +++++++++++++++++++++++++++++++++++++++++++++
-# def sos_type_fun(message):
-#     sosType=str(message.text)
-#     #работа с БД
-#     connection = db.create_connection("ORPD.sqlite", '8')
-#     zapros=f"UPDATE ras4et SET sosType='{sosType}' WHERE telegram_id={message.chat.id}"
-#     db.execute_query(connection, zapros, 'Тип сосуда внесение в БД')
-#     connection.close()
-#     #конец работы с БД
-#     return True
-
 
 
 def fnp_fun(ntd,srTRTS,rabT,rabD,obem):
@@ -195,63 +121,6 @@ def fnp_fun(ntd,srTRTS,rabT,rabD,obem):
     rtnMess=rtnMess+' '
     result=rtnMess
     return result
-
-# def srok_fun(message, warning='ok'):
-#     srok = str(message.text)
-#     print(srok)
-#     if fun.check_digit(srok) == False:
-#         return None
-#     else:
-#         srok = float(fun.zapyataya(srok))
-#         #работа с БД
-#         connection = db.create_connection("ORPD.sqlite", '7')
-#         zapros = f"UPDATE ras4et SET srok='{srok}' WHERE telegram_id={message.chat.id}"
-#         db.execute_query(connection, zapros, 'Срок внесение в БД')
-#         connection.close()
-#         #конец работы с БД
-#         return warning
-    
-
-# def pribavka_fun(message):
-#     connection = db.create_connection("ORPD.sqlite", '9')
-#     zapros2=f'SELECT ntd, rtn, sosType, srok FROM ras4et WHERE telegram_id={message.chat.id}'
-#     zap=db.execute_read_query(connection,zapros2,'Запрос')
-#     header=['НТД', 'РТН', 'тип сосуда', 'срок']
-    
-#     print(tabulate(zap, headers=header, tablefmt='grid'))
-#     ntd=zap[0][0]
-#     rtn=int(zap[0][1])
-#     sosType=zap[0][2]
-#     srok=float(zap[0][3])
-#     pribavka=str(message.text)
-#     if fun.check_digit(pribavka)==False:
-#         return None
-#     else:
-#         pribavka=float(fun.zapyataya(pribavka))
-#         skKorr=round(pribavka/srok,4)
-
-#         result = f'Расчетная скорость коррозии: {skKorr} мм/год'
-#         #работа с БД
-#         zapros=f"UPDATE ras4et SET pribavka='{pribavka}', skKorr='{skKorr}' WHERE telegram_id={message.chat.id}"
-#         db.execute_query(connection, zapros, 'Прибавка и ск. корр. внесение в БД')
-        
-#         #вывод таблицы ras4et
-#         getColumnNames=connection.execute("select * from ras4et limit 1")
-#         colName=[i[0] for i in getColumnNames.description]
-
-#         vivod=f'SELECT * FROM ras4et WHERE telegram_id={message.chat.id}'
-#         viv=db.execute_read_query(connection, vivod)
-#         print(tabulate(viv, headers=colName, tablefmt='grid'))
-        
-#         #конец работы с БД
-        
-#         resultRevizia=revizia_fun(ntd,rtn,skKorr,sosType)
-
-#         result += '\n\n'+resultRevizia
-#     connection.close()
-#     result += '\n\n\n' + 'Для просмотра главного меню введите /start\n\nДля расчета сосудов введите /vessel\n\nдля расчета трубопроводов введите /pipe'
-#     return result
-
 
 
 
