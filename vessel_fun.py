@@ -16,7 +16,7 @@ def update_db_digit_fun(message, param_name, warning=' '):
     if param_name == 'tKip':
         connection = db.create_connection('ORPD.sqlite', param_name)
         zapros1 = f'SELECT sreda FROM ras4et WHERE telegram_id={message.chat.id}'
-        tKip = db.execute_read_query(connection, zapros1)
+        tKip ,= db.execute_read_query(connection, zapros1)
         print(tKip, 'TKIP!!!!!!!')
         param = str(message.text)
     else:
