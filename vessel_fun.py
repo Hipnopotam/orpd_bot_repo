@@ -19,9 +19,11 @@ def update_db_digit_fun(message, param_name, warning=' '):
         tKip ,= db.execute_read_query(connection, zapros1)
         if tKip[0] == 'газ':
             param = '0'
+            warning = 'газ'
             # print('газ')
         elif tKip[0] == 'вода':
             param = '115'
+            warning = 'вода'
             # print('вода')
         else:
             # print('жидксоть')
@@ -79,13 +81,13 @@ def ntd_fun_result(rabD,obem,rabT,tKip,sreda):
     elif rabD>0.07 and rabT>tKip and (sreda=='Жидкость' or sreda=='жидкость'):
         ntdMess='На сосуд распространяется ФНП ОРПД - ст.2 в).'
         ntd='ФНП'
-    elif rabD>0.07 and (sreda=='газ' or sreda=='Газ'):
+    elif rabD>0.07 and (sreda=='газ'):
         ntdMess='На сосуд распространяется ФНП ОРПД - ст.2 а).'
         ntd='ФНП'
     elif obem*rabD>0.02 and rabD>0.07 and obem<=0.025:
         ntdMess='На сосуд распространяется ФНП ОРПД - ст.5 ж).'
         ntd='ФНП'
-    elif rabD>0.07 and (sreda=='вода' or sreda=='Вода') and rabT>115:
+    elif rabD>0.07 and (sreda=='вода') and rabT>115:
         ntdMess='На сосуд распространяется ФНП ОРПД - ст.2 б).'
         ntd='ФНП'
     elif rabD<=0.07:

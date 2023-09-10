@@ -126,6 +126,7 @@ def rabT_fun(message):
     else:
         num2 = bot.send_message(message.chat.id, 'Введите температуру кипения, С:')
         bot.register_next_step_handler(num2 ,tKip_fun)
+        # СДЕЛАТЬ ТУТ ВНЕСЕНИЕ Т КИП ДЛЯ ГАЗА И ВОДЫ В БД
 
 def tKip_fun(message):
     # t_kip = vf.tKip_fun(message)
