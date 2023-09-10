@@ -47,7 +47,7 @@ def result_fun(message):
     connection = db.create_connection("ORPD.sqlite",'4')
     zapros1=f'SELECT rabD, sreda, tKip, rabT, obem, skKorr FROM ras4et WHERE telegram_id={message.chat.id}'
     zap=db.execute_read_query(connection,zapros1,'Запрос')
-    header=['Среда','Т Кипен','РабТ', 'Объем']
+    header=['раб Давл','среда','темп кип', 'раб темп', 'объем', 'ск корр']
     print(tabulate(zap, headers=header, tablefmt='grid'))
     rabD=float(zap[0][0])
     sreda=zap[0][1]
