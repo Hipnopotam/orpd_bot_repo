@@ -160,9 +160,8 @@ def result_fun(message):
     result=vf.result_fun(message)
     bot.send_message(message.chat.id, result)
     print(result, '- result')
-    if 'ФНП' in result:
-        rtn = vf.rtn_fun(message)
-        bot.send_message(message.chat.id, rtn)
+    rtn = vf.rtn_fun(message)
+    bot.send_message(message.chat.id, rtn)
     revizia = vf.revizia_fun(message)
     bot.send_message(message.chat.id, revizia)
 
