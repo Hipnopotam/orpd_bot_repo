@@ -51,7 +51,12 @@ def pipe_final_fun(message):
     z ,= db.execute_read_query(connection, q)
     # (8, 48691773, 'Alexey N.', '1.0', '2.0', '3.0', '4.0', '5.0', 'Пар', '6.0', 'ТГ или НГ', None, 'no_active')
     _, user_id, user_name, rabD, rasD, rabT, rasT, nomD, sreda, skKorr, pipe_category, *_ = z
-
+    rabD = float(rabD)
+    rasD = float(rasD)
+    rabT = float(rabT)
+    rasT = float(rasT)
+    nomD = float(nomD)
+    skKorr = float(skKorr)
     if 'Класс 1' in pipe_category:
         category = 'I А (а)'
     elif 'Класс 3' in pipe_category and rabD>2.5 and (rabT>300 or rabT<-40):
