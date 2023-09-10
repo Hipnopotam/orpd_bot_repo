@@ -79,7 +79,7 @@ def ntd_fun_result(rabD,obem,rabT,tKip,sreda):
 
 def rtn_fun(message):
     connection = db.create_connection("ORPD.sqlite", '6')
-    zapros=f'SELECT rabT, obem, ntd, rabD, prime4anie FROM ras4et WHERE telegram_id={message.chat.id}'
+    zapros=f'SELECT rabT, obem, ntd, rabD, srTRTS FROM ras4et WHERE telegram_id={message.chat.id}'
     zap=db.execute_read_query(connection,zapros,'Запрос')
     header=['РабТ', 'объем', 'НТД', 'рабД', 'подписку']
     print(tabulate(zap, headers=header,tablefmt='grid'))
@@ -87,9 +87,9 @@ def rtn_fun(message):
     obem=float(zap[0][1])
     ntd=zap[0][2]
     rabD=float(zap[0][3])
-    srTRTS=str(message.text)
-    podpiska=str(zap[0][4])
-    print(ntd,srTRTS,rabT,rabD,obem, 'FNP_FUN')
+    skKorr=str(message.text)
+    srTRTS=str(zap[0][4])
+    print(ntd,srTRTS,rabT,rabD,obem, 'FNP_FUN') #ФНП 0.1 202.0 1.0 3.0 FNP_FUN
     result=fnp_fun(ntd,srTRTS,rabT,rabD,obem)
     rtnMess=result
     if 'не надо'in rtnMess:
