@@ -19,9 +19,12 @@ def update_db_digit_fun(message, param_name, warning=' '):
         tKip ,= db.execute_read_query(connection, zapros1)
         if tKip[0] == 'газ':
             param = '0'
+            print('газ')
         elif tKip[0] == 'вода':
             param = '115'
+            print('вода')
         else:
+            print('жидксоть')
             param = str(message.text)
     else:
         param = str(message.text)
