@@ -13,9 +13,9 @@ def update_db_text_fun(message, param_name, warning=' '):
     return True
 
 def update_db_digit_fun(message, param_name, warning=' '):
-    if param_name == 'tKip' and param == 'газ':
+    if param_name == 'tKip' and message.text == 'газ':
         param='0'
-    elif param_name == 'tKip' and param == 'вода':
+    elif param_name == 'tKip' and message.text == 'вода':
         param='115'
     else:
         param = str(message.text)
