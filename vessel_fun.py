@@ -13,7 +13,13 @@ def update_db_text_fun(message, param_name, warning=' '):
     return True
 
 def update_db_digit_fun(message, param_name, warning=' '):
-    param = str(message.text)
+    if param_name == 'tKip' and param == 'газ':
+        param='0'
+    elif param_name == 'tKip' and param == 'вода':
+        param='115'
+    else:
+        param = str(message.text)
+
     if fun.check_digit(param) != False:
         param = float(fun.zapyataya(param))
         # Работа с БД
