@@ -89,7 +89,7 @@ def rtn_fun(message):
     rabD=float(zap[0][3])
     srTRTS=str(message.text)
     podpiska=str(zap[0][4])
-    print('НТД!!!!! - ', ntd)
+    print(ntd,srTRTS,rabT,rabD,obem, 'FNP_FUN')
     result=fnp_fun(ntd,srTRTS,rabT,rabD,obem)
     rtnMess=result
     if 'не надо'in rtnMess:
