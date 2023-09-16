@@ -462,7 +462,7 @@ def handle_text1(message):
 
 4. Инструкция по техническому надзору и эксплуатации сосудов, работающих под давлением, на которые не распространяются Правила Госгортехнадзора - далее <b><a href="https://yandex.ru/search/?text=итнэ-93&lr=35">ИТНЭ-93</a></b>.
 '''
-    bot.send_message(message.chat.id, mess, parse_mode='html',)
+    bot.send_message(message.chat.id, mess, parse_mode='html')
 
 
 
