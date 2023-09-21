@@ -163,7 +163,7 @@ def result_fun(message):
     # print(result, '- result')
     rtn = vf.rtn_fun(message)
     bot.send_message(message.chat.id, rtn)
-    revizia = vf.revizia_fun(message) + '\n\nДля продолжения введите /vessel.\nИли введите /start'
+    revizia = str(vf.revizia_fun(message)) + '\n\nДля продолжения введите /vessel.\nИли введите /start'
     bot.send_message(message.chat.id, revizia)
 
 ####################################################################
