@@ -72,7 +72,7 @@ def nachalo_fun(message):
 @bot.message_handler(commands=['vessel'])
 def vessel_start(message):
     check_user_result = fun.check_user_fun(message, 'ras4et')
-    bot.send_message(message.chat.id, check_user_result[1])
+    # bot.send_message(message.chat.id, check_user_result[1])
     markup2 = types.InlineKeyboardMarkup()
     button_sosud = types.InlineKeyboardButton(text = 'Сосуд', callback_data='sosud')
     button_tepnik = types.InlineKeyboardButton(text = 'Теплообменник', callback_data='tepnik')
