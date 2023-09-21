@@ -47,9 +47,9 @@ def update_db_digit_fun(message, param_name, warning=' '):
 def result_fun(message):
     #Запрос из БД-таблицы ras4et - рабочего давления, среда, темп кипения
     connection = db.create_connection("ORPD.sqlite",'4')
-    zapros1=f'SELECT rabD, sreda, tKip, rabT, obem, skKorr, srTRTS FROM ras4et WHERE telegram_id={message.chat.id}'
+    zapros1=f'SELECT rabD, sreda, tKip, rabT, obem, skKorr, srTRTS, sosType FROM ras4et WHERE telegram_id={message.chat.id}'
     zap=db.execute_read_query(connection,zapros1,'Запрос')
-    header=['раб Давл','среда','темп кип', 'раб темп', 'объем', 'ск корр', 'группа среды ТР ТС']
+    header=['раб Давл','среда','темп кип', 'раб темп', 'объем', 'ск корр', 'группа среды ТР ТС', 'Тип сосуда']
     print(tabulate(zap, headers=header, tablefmt='grid'))
     rabD=float(zap[0][0])
     sreda=zap[0][1]
@@ -57,10 +57,11 @@ def result_fun(message):
     rabT=float(zap[0][3])
     obem=float(zap[0][4])
     skKorr = float(zap[0][5])
+    sos_type = str(zap[0][7])
     resultNTD=ntd_fun_result(rabD,obem,rabT,tKip,sreda)
     ntd, ntdMess = resultNTD
     t=f'''
-    Параметры сосуда:
+    Параметры {sos_type}а:
     Рабочее давление - {rabD} МПа, 
     Рабочая температура - {rabT} С,
     Объем сосуда - {obem} м3, 
