@@ -81,13 +81,13 @@ def ntd_fun_result(rabD,obem,rabT,tKip,sreda):
     elif rabD>0.07 and rabT>tKip and (sreda=='Жидкость' or sreda=='жидкость'):
         ntdMess='На сосуд распространяется ФНП ОРПД - ст.2 в).'
         ntd='ФНП'
-    elif rabD>0.07 and (sreda=='газ'):
+    elif rabD>0.07 and sreda=='газ':
         ntdMess='На сосуд распространяется ФНП ОРПД - ст.2 а).'
         ntd='ФНП'
-    elif obem*rabD>0.02 and rabD>0.07 and obem<=0.025:
+    elif obem*rabD>0.02 and rabD>0.07 and obem<=0.025 and rabT>tKip:
         ntdMess='На сосуд распространяется ФНП ОРПД - ст.5 ж).'
         ntd='ФНП'
-    elif rabD>0.07 and (sreda=='вода') and rabT>115:
+    elif rabD>0.07 and sreda=='вода' and rabT>115:
         ntdMess='На сосуд распространяется ФНП ОРПД - ст.2 б).'
         ntd='ФНП'
     elif rabD<=0.07:
