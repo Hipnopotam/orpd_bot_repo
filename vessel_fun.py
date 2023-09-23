@@ -232,13 +232,13 @@ def check_sreda_fun(id):
     
     sreda ,= db.execute_read_query(connection, zapros_read)[0]
     print('sreda - ', sreda)
-    if sreda=='вода':
+    if 'вода' in sreda:
         tKip = 115
-    elif sreda=='газ':
+    elif 'газ' in sreda:
         tKip=0
     else:
         tKip = ''
     zapros_write=f"UPDATE ras4et SET tKip='{tKip}' WHERE telegram_id={id}"
-    db.execute_query(connection, zapros_write, f'Т КИП газа и воды внесение в БД')
+    db.execute_query(connection, zapros_write, f'Т КИП {sreda} внесение в БД')
     connection.close()
     return sreda
