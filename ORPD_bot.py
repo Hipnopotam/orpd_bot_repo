@@ -99,9 +99,15 @@ def sreda_jidk_fun(message):
     if 'вода' not in message.text:
         button_1gr = types.InlineKeyboardButton(text = '1 группа', callback_data='gr1')
         mark.add(button_1gr)
-    button_2gr = types.InlineKeyboardButton(text = '2 группа', callback_data='gr2')
-    mark.add(button_2gr)
-    bot.send_message(message.chat.id, 'Выберете группы среды по ТР ТС 032/2013', reply_markup=mark)
+        button_2gr = types.InlineKeyboardButton(text = '2 группа', callback_data='gr2')
+        mark.add(button_2gr)
+        bot.send_message(message.chat.id, 'Выберете группы среды по ТР ТС 032/2013', reply_markup=mark)
+    elif 'вода' in message.text:
+        num4s = 'вода - 2 группа по ТР ТС 032/2013'
+        num4 = bot.send_message(message.chat.id, num4s)
+        sreda_TRTS_fun(num4)
+    else:
+        print('Ошибка 5')
 
 def sreda_TRTS_fun(message):
     vf.update_db_text_fun(message, 'srTRTS')
