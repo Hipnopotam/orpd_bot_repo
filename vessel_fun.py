@@ -238,7 +238,7 @@ def check_sreda_fun(id):
         tKip=0
     else:
         tKip = ''
-    zapros_write=f'UPDATE ras4et SET tKip={tKip} WHERE telegram_id={id}'
+    zapros_write=f"UPDATE ras4et SET tKip='{tKip}' WHERE telegram_id={id}"
     db.execute_query(connection, zapros_write, f'Т КИП газа и воды внесение в БД')
     connection.close()
     return sreda
