@@ -230,7 +230,7 @@ def check_sreda_fun(id):
     connection = db.create_connection("ORPD.sqlite", '11')
     zapros_read = f'SELECT sreda FROM ras4et WHERE telegram_id={id}'
     
-    sreda = db.execute_read_query(connection, zapros_read)
+    sreda ,= db.execute_read_query(connection, zapros_read)
     print('sreda - ', sreda)
     if sreda=='вода':
         tKip = 115
