@@ -141,7 +141,6 @@ def rabT_fun(message):
             bot.register_next_step_handler(num2 ,obem_fun)
         else:
             print('ошибка 4')
-        # СДЕЛАТЬ ТУТ ВНЕСЕНИЕ Т КИП ДЛЯ ГАЗА И ВОДЫ В БД
 
 def tKip_fun(message):
     # t_kip = vf.tKip_fun(message)
