@@ -103,9 +103,9 @@ def sreda_jidk_fun(message):
         mark.add(button_2gr)
         bot.send_message(message.chat.id, 'Выберете группы среды по ТР ТС 032/2013', reply_markup=mark)
     elif 'вода' in message.text:
-        num4s = 'вода - 2 группа по ТР ТС 032/2013'
-        num4 = bot.send_message(message.chat.id, num4s)
-        sreda_TRTS_fun(num4)
+        # num4s = '2 группа'
+        # num4 = bot.send_message(message.chat.id, num4s)
+        sreda_TRTS_fun(bot.send_message(message.chat.id, '2 группа'))
     else:
         print('Ошибка 5')
 
