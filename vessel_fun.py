@@ -234,6 +234,8 @@ def check_sreda_fun(message):
         tKip = 115
     elif sreda=='газ':
         tKip=0
+    else:
+        tKip = ''
     zapros_write=f'UPDATE ras4et SET tKip={tKip} WHERE telegram_id={message.chat.id}'
     db.execute_query(connection, zapros_write, f'Т КИП газа и воды внесение в БД')
     connection.close()
