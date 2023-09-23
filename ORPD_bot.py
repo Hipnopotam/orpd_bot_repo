@@ -129,7 +129,7 @@ def rabT_fun(message):
         if sreda!='газ' or sreda!='вода':
             num2 = bot.send_message(message.chat.id, 'Введите температуру кипения, С:')
             bot.register_next_step_handler(num2 ,tKip_fun)
-        elif sreda=='жидкость':
+        elif sreda!='жидкость':
             num2 = bot.send_message(message.chat.id, 'Введите объем сосуда, м3:')
             bot.register_next_step_handler(num2 ,obem_fun)
         else:
