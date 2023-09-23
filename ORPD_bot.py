@@ -127,10 +127,10 @@ def rabT_fun(message):
     else:
         sreda = vf.check_sreda_fun(message.chat.id)
         print(sreda,' - sreda')
-        if sreda!='газ' or sreda!='вода':
+        if 'газ' not in sreda or 'вода' not in sreda:
             num2 = bot.send_message(message.chat.id, 'Введите температуру кипения, С:')
             bot.register_next_step_handler(num2 ,tKip_fun)
-        elif sreda!='жидкость':
+        elif 'жидкость' in sreda:
             num2 = bot.send_message(message.chat.id, 'Введите объем сосуда, м3:')
             bot.register_next_step_handler(num2 ,obem_fun)
         else:
