@@ -226,17 +226,19 @@ def revizia_fun(message):
         print('ошибка 3')
     return resultRevizia
 
-def check_sreda_fun(message):
+def check_sreda_fun(id):
     connection = db.create_connection("ORPD.sqlite", '11')
-    zapros_read = f'SELECT sreda FROM ras4et WHERE telegram_id={message.chat.id}'
+    zapros_read = f'SELECT sreda FROM ras4et WHERE telegram_id={id}'
+    
     sreda = db.execute_read_query(connection, zapros_read)
+    print('sreda - ', sreda)
     if sreda=='вода':
         tKip = 115
     elif sreda=='газ':
         tKip=0
     else:
         tKip = ''
-    zapros_write=f'UPDATE ras4et SET tKip={tKip} WHERE telegram_id={message.chat.id}'
+    zapros_write=f'UPDATE ras4et SET tKip={tKip} WHERE telegram_id={id}'
     db.execute_query(connection, zapros_write, f'Т КИП газа и воды внесение в БД')
     connection.close()
     return sreda

@@ -125,7 +125,7 @@ def rabT_fun(message):
         num1 = bot.send_message(message.chat.id, "Введите Рабочую температуру цифрами, С")
         bot.register_next_step_handler(num1, rabT_fun)
     else:
-        sreda = vf.check_sreda_fun(message)
+        sreda = vf.check_sreda_fun(message.chat.id)
         if sreda!='газ' or sreda!='вода':
             num2 = bot.send_message(message.chat.id, 'Введите температуру кипения, С:')
             bot.register_next_step_handler(num2 ,tKip_fun)
