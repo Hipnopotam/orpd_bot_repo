@@ -338,11 +338,12 @@ def activate_fun(message, userID):
 
 def activate_by_admin(message):
     activ_admin = admin.activate_by_admin(message)
+    user_id=message.split('-')[0]
     if activ_admin== None:
         bot.send_message(48691773, 'Ошибка активации админом')
     else:
         message_for_user, message_for_admin = activ_admin
-        bot.send_message(message.chat.id, message_for_user, parse_mode='HTML')
+        bot.send_message(user_id, message_for_user, parse_mode='HTML')
         bot.send_message(48691773, message_for_admin)
 
 
