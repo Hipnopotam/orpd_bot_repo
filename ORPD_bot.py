@@ -338,6 +338,7 @@ def activate_fun(message, userID):
 
 def activate_by_admin(message):
     activ_admin = admin.activate_by_admin(message)
+    print(message.text, '- message.text')
     user_id=message.text.split('-')[0]
     if activ_admin== None:
         bot.send_message(48691773, 'Ошибка активации админом')
