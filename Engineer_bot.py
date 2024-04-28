@@ -166,7 +166,7 @@ def final_document(message):
     doc = docx.Document()
 
     # добавляем таблицу 3x3
-    table = doc.add_table(rows = 3, cols = 3)
+    table = doc.add_table(rows = i, cols = 3)
     # применяем стиль для таблицы
     table.style = 'Table Grid'
 
