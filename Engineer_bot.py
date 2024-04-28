@@ -176,7 +176,8 @@ def final_document(message):
                 # получаем ячейку таблицы
                 cell = table.cell(row, col)
                 # записываем в ячейку данные
-                cell.text = str(all_user_defects_list[row])
+                index = i - row
+                cell.text = str(all_user_defects_list[index])
             elif col == 2:
                 # получаем ячейку таблицы
                 cell = table.cell(row, col)
