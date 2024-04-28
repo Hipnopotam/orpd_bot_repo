@@ -154,7 +154,7 @@ def final_document(message):
     work_book.save(f'{message.chat.id}_numbers.xlsx')
 
     # Конец работы с Excel
-
+    print("i = ", i)
     # Работа с Word
     doc = docx.Document()
     # добавляем таблицу 3x3
