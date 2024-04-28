@@ -174,20 +174,10 @@ def final_document(message):
     for row in range(i):
         for col in range(3):
             if col == 0:
-                # получаем ячейку таблицы
-                cell = table.cell(row, col)
-                # записываем в ячейку данные
-                cell.text = i
-            elif col == 1:
-                # получаем ячейку таблицы
-                cell = table.cell(row, col)
-                # записываем в ячейку данные
-                cell.text = 'Замечание'+i
-            elif col == 2:
-                # получаем ячейку таблицы
-                cell = table.cell(row, col)
-                # записываем в ячейку данные
-                cell.text = 'Начальник АВТ'
+            # получаем ячейку таблицы
+            cell = table.cell(row, col)
+            # записываем в ячейку данные
+            cell.text = str(row + 1) + str(col + 1)
     doc.save(f'{message.chat.id}_numbers.docx')
 
     # # Конец работы с Word
