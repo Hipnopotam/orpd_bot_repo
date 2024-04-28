@@ -154,15 +154,9 @@ def final_document(message):
     work_book.save(f'{message.chat.id}_numbers.xlsx')
 
     # Конец работы с Excel
-
-    print("i = ", i)
     
     
     # # Работа с Word
-  
-
-
-    # Образец с сайта
     doc = docx.Document()
 
     # добавляем таблицу 3x3
@@ -182,7 +176,7 @@ def final_document(message):
                 # получаем ячейку таблицы
                 cell = table.cell(row, col)
                 # записываем в ячейку данные
-                cell.text = str('Замечание ') + str(row+1)
+                cell.text = str(all_user_defects_list[row])
             elif col == 2:
                 # получаем ячейку таблицы
                 cell = table.cell(row, col)
