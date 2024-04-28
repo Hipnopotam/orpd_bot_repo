@@ -191,11 +191,11 @@ def final_document(message):
     clear_user_row = f"UPDATE defects SET defect=' ' WHERE telegram_id={message.chat.id}"
     db.execute_query(connection, clear_user_row, 'Очистка строки юзера')
     connection.close()
-    with open(f'{message.chat.id}_numbers.xlsx', 'rb') as f:
-        bot.send_document(message.chat.id, f)
+    # with open(f'{message.chat.id}_numbers.xlsx', 'rb') as f:
+    #     bot.send_document(message.chat.id, f)
     with open(f'{message.chat.id}_numbers.docx', 'rb') as word:
         bot.send_document(message.chat.id, word)
-    os.remove(f'{message.chat.id}_numbers.xlsx')
+    # os.remove(f'{message.chat.id}_numbers.xlsx')
     os.remove(f'{message.chat.id}_numbers.docx')
     bot.send_message(message.chat.id, 'Для начала введите команду /start.')
 
