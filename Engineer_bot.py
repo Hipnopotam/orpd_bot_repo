@@ -159,33 +159,8 @@ def final_document(message):
     
     
     # # Работа с Word
-    # doc = docx.Document()
-    # # добавляем таблицу 3x3
-    # table = doc.add_table(rows = i, cols = 3)
-    # # применяем стиль для таблицы
-    # table.style = 'Table Grid'
-    # # заполняем таблицу данными
-    # for row in range(i):
-    #     for col in range(3):
-    #         if col == 1:
-    #             # получаем ячейку таблицы
-    #             cell = table.cell(row, col)
-    #             # записываем в ячейку данные
-    #             cell.text = col
-    #         elif col == 2:
-    #             # получаем ячейку таблицы
-    #             cell = table.cell(row, col)
-    #             # записываем в ячейку данные
-    #             cell.text = numbers[i]
-    #         elif col == 3:
-    #             # получаем ячейку таблицы
-    #             cell = table.cell(row, col)
-    #             # записываем в ячейку данные
-    #             cell.text = 'Начальник АВТ'
+  
 
-    # doc.save(f'{message.chat.id}_numbers.docx')
-
-    # # Конец работы с Word
 
     # Образец с сайта
     doc = docx.Document()
@@ -196,7 +171,7 @@ def final_document(message):
     table.style = 'Table Grid'
 
     # заполняем таблицу данными
-    for row in range(3):
+    for row in range(i):
         for col in range(3):
             # получаем ячейку таблицы
             cell = table.cell(row, col)
@@ -204,11 +179,17 @@ def final_document(message):
             cell.text = str(row + 1) + str(col + 1)
     doc.save(f'{message.chat.id}_numbers.docx')
 
+    # # Конец работы с Word
+
+
     clear_user_row = f"UPDATE defects SET defect=' ' WHERE telegram_id={message.chat.id}"
     db.execute_query(connection, clear_user_row, 'Очистка строки юзера')
     connection.close()
     with open(f'{message.chat.id}_numbers.xlsx', 'rb') as f:
         bot.send_document(message.chat.id, f)
+    with open(f'{message.chat.id}_numbers.docx', 'rb') as word:
+        bot.send_document(message.chat.id, word)
     os.remove(f'{message.chat.id}_numbers.xlsx')
+    os.remove(f'{message.chat.id}_numbers.docx')
 
 bot.polling()
