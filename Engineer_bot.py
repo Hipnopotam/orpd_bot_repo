@@ -162,7 +162,7 @@ def final_document(message):
     # применяем стиль для таблицы
     table.style = 'Table Grid'
     # заполняем таблицу данными
-    for row in i:
+    for row in range(i):
         for col in range(3):
             if col == 1:
                 # получаем ячейку таблицы
