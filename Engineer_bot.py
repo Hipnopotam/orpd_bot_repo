@@ -180,7 +180,7 @@ def final_document(message):
                 # записываем в ячейку данные
                 cell.text = 'Начальник АВТ'
 
-    doc.save(f'{message.chat.id}_numbers.xlsx')
+    doc.save(f'{message.chat.id}_numbers.docx')
 
     # Конец работы с Word
 
