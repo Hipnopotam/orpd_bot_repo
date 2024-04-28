@@ -231,7 +231,7 @@ def check_sreda_fun(id):
     zapros_read = f'SELECT sreda FROM ras4et WHERE telegram_id={id}'
     
     sreda ,= db.execute_read_query(connection, zapros_read)[0]
-    print('sreda - ', sreda)
+    # print('sreda - ', sreda)
     if 'вода' in sreda:
         tKip = 115
         # print('YEAH 1')

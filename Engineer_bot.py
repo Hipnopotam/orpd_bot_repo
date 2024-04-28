@@ -103,9 +103,6 @@ def transcript(message):
 
 @bot.message_handler(commands=['show_final_document'])
 def show(message):
-    # for i,j in defects.items():
-    #     bot.send_message(message.chat.id, f'{i} - {j}')
-    # print(defects)
     connection = db.create_connection("DEFECTS.sqlite", '3')
     #вывод таблицы defects
     getColumnNames=connection.execute("select * from defects limit 1")
@@ -125,16 +122,14 @@ def final_document(message):
     connection = db.create_connection("DEFECTS.sqlite", '4')
     get_all_user_defects = f"SELECT defect FROM defects WHERE telegram_id={message.chat.id}"
     all_user_defects ,= db.execute_read_query(connection, get_all_user_defects, '5')
-    # print(type(all_user_defects[0]))
+   
 
     all_user_defects_list = all_user_defects[0].split(sep='$$$')
-    # max_length = len(all_user_defects_list) - 1
-    # print('max_lenght = ', max_length)
-    # print(all_user_defects_list)
+
 
     list_length = len(all_user_defects_list)-1
-    # print('list_length', list_length)
-    i = 0 # Итератор
+
+    i = 0 # Итератор - по количеству строк
     while i < list_length:
         defect = all_user_defects_list[i]
         print(i+1, defect) 
@@ -164,5 +159,6 @@ def final_document(message):
     connection.close()
     with open(f'{message.chat.id}_numbers.xlsx', 'rb') as f:
         bot.send_document(message.chat.id, f)
+    os.remove(f'{message.chat.id}_numbers.xlsx')
 
 bot.polling()
