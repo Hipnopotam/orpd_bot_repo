@@ -197,5 +197,6 @@ def final_document(message):
         bot.send_document(message.chat.id, word)
     os.remove(f'{message.chat.id}_numbers.xlsx')
     os.remove(f'{message.chat.id}_numbers.docx')
+    bot.send_message(message.chat.id, 'Для начала введите команду /start.')
 
 bot.polling()
