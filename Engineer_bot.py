@@ -178,11 +178,16 @@ def final_document(message):
                 cell = table.cell(row, col)
                 # записываем в ячейку данные
                 cell.text = str(row+1)
-            if col == 1:
+            elif col == 1:
                 # получаем ячейку таблицы
                 cell = table.cell(row, col)
                 # записываем в ячейку данные
                 cell.text = str('Замечание ') + str(row+1)
+            elif col == 2:
+                # получаем ячейку таблицы
+                cell = table.cell(row, col)
+                # записываем в ячейку данные
+                cell.text = str('Начальник АВТ')
     doc.save(f'{message.chat.id}_numbers.docx')
 
     # # Конец работы с Word
