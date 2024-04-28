@@ -173,6 +173,8 @@ def final_document(message):
     # заполняем таблицу данными
     for row in range(i):
         for col in range(3):
+            print ('col = ', col)
+            print (type(col))
             # получаем ячейку таблицы
             cell = table.cell(row, col)
             # записываем в ячейку данные
