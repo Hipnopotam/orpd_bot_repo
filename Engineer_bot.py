@@ -136,39 +136,25 @@ def final_document(message):
         print(i+1, defect) 
         i+=1
     
-    
-    # Работа с Excel
-
-    work_book = Workbook()
-    work_sheet = work_book.active
-
-    # Коллекция для генерации таблицы
-    numbers = all_user_defects_list #[1, 2, 3, 4, 5]
-    j=0
-    for elem in numbers:
-        row = [j+1, elem]
-        print(row)
-        work_sheet.append(row)
-        j+=1
-
-    work_book.save(f'{message.chat.id}_numbers.xlsx')
-
-    # Конец работы с Excel
-    
-    
     # # Работа с Word
     doc = docx.Document()
 
     # добавляем таблицу 3x3
-    table = doc.add_table(rows = i+1, cols = 3)
+    table = doc.add_table(rows = i+1, cols = 4)
     # применяем стиль для таблицы
     table.style = 'Table Grid'
+
+    # Заголовок таблицы
+
     title_cell_num = table.cell(0,0)
     title_cell_num.text = str('№ пп')
     title_cell_desc = table.cell(0,1)
     title_cell_desc.text = str('Описание дефекта')
     title_cell_otv = table.cell(0,2)
     title_cell_otv.text = str('Ответственный за устранение')
+    title_cell_srok = table.cell(0,3)
+    title_cell_srok.text = str('Срок устранения')
+
     # заполняем таблицу данными
     for row in range(i):
         row+=1
@@ -177,20 +163,23 @@ def final_document(message):
                 # получаем ячейку таблицы
                 cell = table.cell(row, col)
                 # записываем в ячейку данные
-                cell.text = str(row)
+                cell.text = str(row) # порядковый номер
             elif col == 1:
                 # получаем ячейку таблицы
                 cell = table.cell(row, col)
                 # записываем в ячейку данные
-                index = i - row #i = 4 , row = 1 -> index = 3
-                cell.text = str(all_user_defects_list[index])
+                index = i - row 
+                cell.text = str(all_user_defects_list[index]) # Текст замечания
             elif col == 2:
                 # получаем ячейку таблицы
                 cell = table.cell(row, col)
                 # записываем в ячейку данные
-                cell.text = str('Начальник АВТ')
+                cell.text = str('Начальник АВТ') # Ответственный - надо сделать, чтобы пользователь определял
+            else:
+                cell = table.cell(row, col)
+                cell.text = str(' ') # место для внесения срока
 
-    doc.save(f'{message.chat.id}_numbers.docx')
+    doc.save(f'{message.chat.id}_numbers.docx') # сохранения конечного документа
 
     # # Конец работы с Word
 
@@ -198,12 +187,11 @@ def final_document(message):
     clear_user_row = f"UPDATE defects SET defect=' ' WHERE telegram_id={message.chat.id}"
     db.execute_query(connection, clear_user_row, 'Очистка строки юзера')
     connection.close()
-    # with open(f'{message.chat.id}_numbers.xlsx', 'rb') as f:
-    #     bot.send_document(message.chat.id, f)
+
     with open(f'{message.chat.id}_numbers.docx', 'rb') as word:
-        bot.send_document(message.chat.id, word)
-    os.remove(f'{message.chat.id}_numbers.xlsx')
-    os.remove(f'{message.chat.id}_numbers.docx')
+        bot.send_document(message.chat.id, word) # отправка в чат конечного документа
+    os.remove(f'{message.chat.id}_numbers.docx') # после отправки документ удаляется
+
     bot.send_message(message.chat.id, 'Для начала введите команду /start.')
 
 bot.polling()
