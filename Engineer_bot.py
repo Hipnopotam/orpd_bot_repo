@@ -160,29 +160,36 @@ def final_document(message):
     doc = docx.Document()
 
     # добавляем таблицу 3x3
-    table = doc.add_table(rows = i, cols = 3)
+    table = doc.add_table(rows = i+1, cols = 3)
     # применяем стиль для таблицы
     table.style = 'Table Grid'
-
+    title_cell_num = table.cell(0,0)
+    title_cell_num.text = str('№ пп')
+    title_cell_desc = table.cell(0,1)
+    title_cell_desc.text = str('Описание дефекта')
+    title_cell_otv = table.cell(0,2)
+    title_cell_otv.text = str('Ответственный за устранение')
     # заполняем таблицу данными
     for row in range(i):
+        row+=1
         for col in range(3):
             if col == 0:
                 # получаем ячейку таблицы
                 cell = table.cell(row, col)
                 # записываем в ячейку данные
-                cell.text = str(row+1)
+                cell.text = str(row)
             elif col == 1:
                 # получаем ячейку таблицы
                 cell = table.cell(row, col)
                 # записываем в ячейку данные
-                index = i - row - 1
+                index = i - row - 2
                 cell.text = str(all_user_defects_list[index])
             elif col == 2:
                 # получаем ячейку таблицы
                 cell = table.cell(row, col)
                 # записываем в ячейку данные
                 cell.text = str('Начальник АВТ')
+                
     doc.save(f'{message.chat.id}_numbers.docx')
 
     # # Конец работы с Word
