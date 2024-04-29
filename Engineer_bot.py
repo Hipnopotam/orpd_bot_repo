@@ -142,7 +142,7 @@ def final_document(message):
     # добавляем таблицу 3x3
     table = doc.add_table(rows = i+1, cols = 4,)
     # применяем стиль для таблицы
-    table.style = 'TableGrid'
+    # table.style = 'TableGrid'
 
     # Заголовок таблицы
 
