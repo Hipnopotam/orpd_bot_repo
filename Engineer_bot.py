@@ -117,7 +117,7 @@ def show(message):
 @bot.message_handler(commands=['final'])
 def final_document(message):
 
-    print(message.text)
+    # print(message.text)
     if message.text == '/final':
     
         # Запрос названия объекта, где происходит проверка инженером
@@ -147,7 +147,8 @@ def final_document(message):
         doc = docx.Document()
         # Название документа
         title = f'''
-Акт № 
+Акт № '''
+        title_1 = '''
 комиссионной целевой проверки промышленной безопасности на объекте {message.text}'''
         
         comission = f'''
@@ -157,6 +158,7 @@ def final_document(message):
 Механик {message.text} - 
 '''
         doc.add_heading(title, 0)
+        doc.add_heading(title_1,2)
         doc.add_paragraph(comission)
         # добавляем таблицу 3x3
         table = doc.add_table(rows = i+1, cols = 4)
