@@ -152,9 +152,9 @@ def final_document(message):
         
         comission = f'''
 Члены комиссии:
-Инженер ОТН - /t/t/t/t
-Начальник {message.text} - /t/t/t/t
-Механик {message.text} - /t/t/t/t
+Инженер ОТН - \t\t\t\t {message.chat.last_name} {message.chat.first_name}
+Начальник {message.text} - \t\t\t\t
+Механик {message.text} - 
 '''
         doc.add_heading(title, 0)
         doc.add_paragraph(comission)
