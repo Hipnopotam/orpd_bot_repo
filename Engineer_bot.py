@@ -129,8 +129,8 @@ def final_document(message):
     all_user_defects ,= db.execute_read_query(connection, get_all_user_defects, '5')
    
 
-    all_user_defects_list = all_user_defects[0].split(sep='$$$')
-
+    all_user_defects_list = all_user_defects[0].split(sep='$$$') #sd
+    
 
     list_length = len(all_user_defects_list)-1
 
