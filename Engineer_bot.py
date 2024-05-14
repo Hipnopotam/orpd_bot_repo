@@ -145,7 +145,19 @@ def final_document(message):
         
         # # Работа с Word
         doc = docx.Document()
-
+        # Название документа
+        title = f'''
+Акт № 
+комиссионной целевой проверки промышленной безопасности на объекте {message.text}'''
+        
+        comission = f'''
+Члены комиссии:
+Инженер ОТН - /t/t/t/t
+Начальник {message.text} - /t/t/t/t
+Механик {message.text} - /t/t/t/t
+'''
+        doc.add_heading(title, 0)
+        doc.add_paragraph(comission)
         # добавляем таблицу 3x3
         table = doc.add_table(rows = i+1, cols = 4)
         # применяем стиль для таблицы
