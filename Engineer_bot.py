@@ -148,7 +148,7 @@ def final_document(message):
         # Название документа
         title = f'''
 Акт № '''
-        title_1 = '''
+        title_1 = f'''
 комиссионной целевой проверки промышленной безопасности на объекте {message.text}'''
         
         comission = f'''
