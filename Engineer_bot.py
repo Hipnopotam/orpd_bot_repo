@@ -114,9 +114,13 @@ def show(message):
     connection.close()
     print(tabulate(viv, headers=colName, tablefmt='grid'))
 
-
 @bot.message_handler(commands=['final'])
 def final_document(message):
+
+    print(message)
+    # Запрос названия объекта, где происходит проверка инженером
+    mess = bot.send_message(message.chat.id, 'Введите название объекта проверки')
+    bot.register_next_step_handler(mess, final_document)
 
     # Здесь должен быть функционал для формирования таблицы Эксель
 
@@ -140,7 +144,7 @@ def final_document(message):
     doc = docx.Document()
 
     # добавляем таблицу 3x3
-    table = doc.add_table(rows = i+1, cols = 4,)
+    table = doc.add_table(rows = i+1, cols = 4)
     # применяем стиль для таблицы
     table.style = 'Table Grid'
 
