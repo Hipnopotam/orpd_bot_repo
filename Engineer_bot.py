@@ -181,7 +181,7 @@ def final_document(message):
                     # получаем ячейку таблицы
                     cell = table.cell(row, col)
                     # записываем в ячейку данные
-                    cell.text = str('Начальник АВТ') # Ответственный - надо сделать, чтобы пользователь определял
+                    cell.text = str(f'Начальник {message.text}') # Ответственный - надо сделать, чтобы пользователь определял
                 else:
                     cell = table.cell(row, col)
                     cell.text = str(' ') # место для внесения срока
