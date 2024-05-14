@@ -147,9 +147,9 @@ def final_document(message):
         # # Работа с Word
         doc = docx.Document()
         # Название документа
-        title = f'''
+        title_text = f'''
 Акт № '''
-        title_1 = f'''
+        title_1_text = f'''
 комиссионной целевой проверки промышленной безопасности на объекте {message.text}'''
         
         comission = f'''
@@ -158,9 +158,10 @@ def final_document(message):
 Начальник {message.text} - \t\t\t\t
 Механик {message.text} - 
 '''
-        title = doc.add_heading(title, 0)
+        title = doc.add_heading(title_text, 0)
         title.alignment = WD_ALIGN_PARAGRAPH.CENTER
-        doc.add_heading(title_1,2)
+        title_1 = doc.add_heading(title_1_text, 2)
+        title_1.alignment = WD_ALIGN_PARAGRAPH.CENTER
         doc.add_paragraph(comission)
         # добавляем таблицу 3x3
         table = doc.add_table(rows = i+1, cols = 4)
