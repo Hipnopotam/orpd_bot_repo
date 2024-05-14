@@ -147,13 +147,10 @@ def final_document(message):
         # # Работа с Word
         doc = docx.Document()
         # Название документа
-        title_text = f'''
-Акт № '''
-        title_1_text = f'''
-комиссионной целевой проверки промышленной безопасности на объекте {message.text}'''
+        title_text = f'Акт № '
+        title_1_text = f'комиссионной целевой проверки промышленной безопасности на объекте {message.text}'
         
-        comission = f'''
-Члены комиссии:
+        comission = f'''Члены комиссии:
 Инженер ОТН - \t\t\t\t {message.chat.last_name} {message.chat.first_name}
 Начальник {message.text} - \t\t\t\t
 Механик {message.text} - 
