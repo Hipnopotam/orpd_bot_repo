@@ -6,6 +6,7 @@ import DB as db
 from tabulate import tabulate
 import openpyxl
 import docx
+from docx.enum.text import WD_ALIGN_PARAGRAPH
 from openpyxl import Workbook
 
 
