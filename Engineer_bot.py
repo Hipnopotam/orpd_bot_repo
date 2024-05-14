@@ -158,7 +158,7 @@ def final_document(message):
 Механик {message.text} - 
 '''
         title = doc.add_heading(title, 0, alignment = 'center')
-        title.alignment = WD_ALIGN_PARAGRAPH.CENTER
+        title.alignment = 'WD_ALIGN_PARAGRAPH.CENTER'
         doc.add_heading(title_1,2)
         doc.add_paragraph(comission)
         # добавляем таблицу 3x3
