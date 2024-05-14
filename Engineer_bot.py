@@ -117,7 +117,7 @@ def show(message):
 @bot.message_handler(commands=['final'])
 def final_document(message):
 
-    print(message)
+    print(message.text)
     # Запрос названия объекта, где происходит проверка инженером
     mess = bot.send_message(message.chat.id, 'Введите название объекта проверки')
     bot.register_next_step_handler(mess, final_document)
@@ -130,7 +130,7 @@ def final_document(message):
    
 
     all_user_defects_list = all_user_defects[0].split(sep='$$$') #sd
-    
+
 
     list_length = len(all_user_defects_list)-1
 
