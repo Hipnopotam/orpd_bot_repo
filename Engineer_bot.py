@@ -157,7 +157,7 @@ def final_document(message):
 Начальник {message.text} - \t\t\t\t
 Механик {message.text} - 
 '''
-        title = doc.add_heading(title, 0, alignment = 'center')
+        title = doc.add_heading(title, 0)
         title.alignment = 'WD_ALIGN_PARAGRAPH.CENTER'
         doc.add_heading(title_1,2)
         doc.add_paragraph(comission)
