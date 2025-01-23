@@ -142,6 +142,14 @@ def handle_document(message):
         act_number = value_to_insert.split('№ ', 1)
         bot.send_message(message.chat.id, act_number[1])
 
+         # Нас интересует первая таблица в документе
+        table = doc.tables[0]
+        
+        # Получаем количество строк в таблице
+        row_count = len(table.rows)
+        print(f'Количество строк в таблице: {row_count}')
+
+
         # Удаляем файл после обработки
         os.remove(message.document.file_name)
 
