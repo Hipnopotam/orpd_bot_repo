@@ -199,7 +199,7 @@ def handle_document(message):
         tab_rows_list = [1,2,4,5,6]
         tab_cols_list = [0,2,2,2,2]
         value_list = [all_equipments_for_insert, all_kks_numbers_for_insert, all_safety_classes_for_insert, all_of_each_counts_for_insert]
-        while n=True:
+        while n == True:
             n = insert_value_to_table(target_doc, table_index_target, tab_rows_list[k], tab_cols_list[k], value_list[k], new_file_name)
             k += 1
             
