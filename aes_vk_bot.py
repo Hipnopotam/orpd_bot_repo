@@ -195,15 +195,17 @@ def handle_document(message):
         # Вставляем значение в целевой документ
         target_doc = 'sample.docx'
         new_file_name = f'{message.chat.id}_numbers.docx'
-        value_to_insert = f'Номер уведомления о ВК / Акта ВК № {act_number[1]}'
+        act_number_to_insert = f'Номер уведомления о ВК / Акта ВК № {act_number[1]}'
+        insert_value_to_table(target_doc, table_index_target, tab_rows_list[k], tab_cols_list[k], value_list[k], new_file_name)
         k = 0
-        tab_rows_list = [1,2,4,5,6]
-        tab_cols_list = [0,2,2,2,2]
-        value_list = [all_equipments_for_insert, all_kks_numbers_for_insert, all_safety_classes_for_insert, all_of_each_counts_for_insert]
+        tab_rows_list = [2,4,5,6]
+        tab_cols_list = [2,2,2,2]
+        value_list = [act_number_to_insert, all_equipments_for_insert, all_kks_numbers_for_insert, all_safety_classes_for_insert, all_of_each_counts_for_insert]
+        
         n = True
         while n == True:
             print(k, ' k')
-            n = insert_value_to_table(target_doc, table_index_target, tab_rows_list[k], tab_cols_list[k], value_list[k], new_file_name)
+            n = insert_value_to_table(new_file_name, table_index_target, tab_rows_list[k], tab_cols_list[k], value_list[k], new_file_name)
             k += 1
             if k == 4:
                 n = False
