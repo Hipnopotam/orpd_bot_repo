@@ -187,13 +187,19 @@ def handle_document(message):
 
         # Параметры для вставки значения
         table_index_target = 0  # Индекс таблицы в целевом документе
-        row_index_target = 2     # Индекс строки в целевой таблице
+        row_index_target = 1     # Индекс строки в целевой таблице
         col_index_target = 0     # Индекс столбца в целевой таблице
 
         # Вставляем значение в целевой документ
         target_doc = 'sample.docx'
         new_file_name = f'{message.chat.id}_numbers.docx'
-        insert_value_to_table(target_doc, table_index_target, row_index_target, col_index_target, act_number, new_file_name)
+        value_to_insert = f'Номер уведомления о ВК / Акта ВК №{act_number[1]}'
+        insert_value_to_table(target_doc, table_index_target, row_index_target, col_index_target, value_to_insert, new_file_name)
+        insert_value_to_table(target_doc, table_index_target, 2, 1, all_equipments_for_insert, new_file_name)
+        insert_value_to_table(target_doc, table_index_target, 4, 1, all_kks_numbers_for_insert, new_file_name)
+        insert_value_to_table(target_doc, table_index_target, 5, 1, all_safety_classes_for_insert, new_file_name)
+        insert_value_to_table(target_doc, table_index_target, 6, 1, all_of_each_counts_for_insert, new_file_name)
+        
 
 
         
