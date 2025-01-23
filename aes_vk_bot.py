@@ -154,8 +154,8 @@ def handle_document(message):
         print(f'Количество оборудования в таблице: {equipment_count}')
 
         text=[]
+        j=0
         for i in range (2, equipment_count):
-            j=0
             equip = extract_value_from_table(source_doc, table_index_source, i, 1)
             text.append(f'{j} {equip}')
             j+=1
