@@ -166,7 +166,10 @@ def handle_document(message):
         equipment_count = row_count - (3 + 5)
         print(f'Количество оборудования в таблице: {equipment_count}')
 
-        all_equipments_for_insert, all_kks_numbers_for_insert, all_safety_classes_for_insert, all_of_each_counts_for_insert = []
+        all_equipments_for_insert = []
+        all_kks_numbers_for_insert = [] 
+        all_safety_classes_for_insert = []
+        all_of_each_counts_for_insert = []
         
         j=0
         for i in range (2, equipment_count):
