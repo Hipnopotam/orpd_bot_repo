@@ -148,9 +148,22 @@ def handle_document(message):
         
         # Получаем количество строк в таблице
         row_count = len(table.rows)
+        # начиная с 3-й строки (2я для кода) и минус 8 строк с конца
         print(f'Количество строк в таблице: {row_count}')
+        equipment_count = row_count - (3 + 8)
+        print(f'Количество оборудования в таблице: {equipment_count}')
+        
+        text = []
+        for paragraph in table:
+            text.append(doc.text)
 
+        # Отправляем обратно пользователю текст из документа
+        bot.send_message(message.chat.id, "\n".join(text))
 
+        
+        
+        
+        
         # Удаляем файл после обработки
         os.remove(message.document.file_name)
 
