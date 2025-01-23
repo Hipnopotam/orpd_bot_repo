@@ -157,7 +157,7 @@ def handle_document(message):
         for i in range (2, equipment_count):
             j=0
             equip = extract_value_from_table(source_doc, table_index_source, i, 1)
-            text.append(j+equip)
+            text.append(f'{j} {equip}')
             j+=1
 
         # Отправляем обратно пользователю текст из документа
