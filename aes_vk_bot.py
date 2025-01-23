@@ -196,7 +196,7 @@ def handle_document(message):
         target_doc = 'sample.docx'
         new_file_name = f'{message.chat.id}_numbers.docx'
         act_number_to_insert = f'Номер уведомления о ВК / Акта ВК № {act_number[1]}'
-        insert_value_to_table(target_doc, table_index_target, tab_rows_list[k], tab_cols_list[k], value_list[k], new_file_name)
+        insert_value_to_table(target_doc, table_index_target, row_index_target, col_index_target, act_number_to_insert, new_file_name)
         k = 0
         tab_rows_list = [2,4,5,6]
         tab_cols_list = [2,2,2,2]
