@@ -75,6 +75,7 @@ def insert_value_to_table(doc_path, table_index, row_index, col_index, value, ne
     table.cell(row_index, col_index).text = value
     # Сохраняем изменения
     doc.save(new_file_name)
+    print(row_index, ' row index')
     return True
 
 
@@ -201,6 +202,7 @@ def handle_document(message):
         value_list = [all_equipments_for_insert, all_kks_numbers_for_insert, all_safety_classes_for_insert, all_of_each_counts_for_insert]
         n = True
         while n == True:
+            print(k, ' k')
             n = insert_value_to_table(target_doc, table_index_target, tab_rows_list[k], tab_cols_list[k], value_list[k], new_file_name)
             k += 1
             if k == 4:
