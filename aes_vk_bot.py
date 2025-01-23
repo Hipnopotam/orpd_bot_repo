@@ -143,6 +143,7 @@ def handle_document(message):
         bot.send_message(message.chat.id, act_number[1])
 
          # Нас интересует первая таблица в документе
+        doc = Document(source_doc)
         table = doc.tables[0]
         
         # Получаем количество строк в таблице
