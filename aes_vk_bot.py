@@ -200,7 +200,7 @@ def handle_document(message):
         k = 0
         tab_rows_list = [2,4,5,6]
         tab_cols_list = [2,2,2,2]
-        value_list = [act_number_to_insert, all_equipments_for_insert, all_kks_numbers_for_insert, all_safety_classes_for_insert, all_of_each_counts_for_insert]
+        value_list = [all_equipments_for_insert, all_kks_numbers_for_insert, all_safety_classes_for_insert, all_of_each_counts_for_insert]
         
         n = True
         while n == True:
