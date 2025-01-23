@@ -156,17 +156,19 @@ def handle_document(message):
         text=[]
         j=0
         for i in range (2, equipment_count):
-            equip = extract_value_from_table(source_doc, table_index_source, i, 1)
+            equip_name = extract_value_from_table(source_doc, table_index_source, i, 1)
+            kks_number = extract_value_from_table(source_doc, table_index_source, i, 2)
+            safety_class = extract_value_from_table(source_doc, table_index_source, i, 3)
+            each_count = extract_value_from_table(source_doc, table_index_source, i, 4)
             j+=1
-            text.append(f'{j} {equip}')
             
+#################### ЭТО ЗНАЧЕНИЯ ДЛЯ ФОРМИРОВАНИЯ ОТЧЕТА ####################
+            all_equipments_for_insert.append(f'{j}. {equip_name}.\n')
+            all_kks_numbers_for_insert.append(f'{j}. {kks_number}.\n')
+            all_safety_classes_for_insert.append(f'{j}. {safety_class}.\n')
+            all_of_each_counts_for_insert.append(f'{j}. {each_count}.\n')
 
-        # Отправляем обратно пользователю текст из документа
-        bot.send_message(message.chat.id, "\n".join(text))
-
-        
-        
-        
+            
         
         # Удаляем файл после обработки
         os.remove(message.document.file_name)
