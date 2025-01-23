@@ -139,7 +139,7 @@ def handle_document(message):
 
         # Извлекаем значение из исходного документа
         value_to_insert = extract_value_from_table(source_doc, table_index_source, row_index_source, col_index_source)
-        act_number = value_to_insert.rsplit('№ ', 1)
+        act_number = value_to_insert.lsplit('№ ', 1)
         bot.send_message(message.chat.id, act_number)
 
         # Удаляем файл после обработки
