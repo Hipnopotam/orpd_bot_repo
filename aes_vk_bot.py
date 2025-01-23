@@ -75,6 +75,7 @@ def insert_value_to_table(doc_path, table_index, row_index, col_index, value, ne
     table.cell(row_index, col_index).text = value
     # Сохраняем изменения
     doc.save(new_file_name)
+    return True
 
 
 
@@ -194,11 +195,19 @@ def handle_document(message):
         target_doc = 'sample.docx'
         new_file_name = f'{message.chat.id}_numbers.docx'
         value_to_insert = f'Номер уведомления о ВК / Акта ВК № {act_number[1]}'
-        insert_value_to_table(target_doc, table_index_target, row_index_target, col_index_target, value_to_insert, new_file_name)
-        insert_value_to_table(target_doc, table_index_target, 2, 1, all_equipments_for_insert, new_file_name)
-        # insert_value_to_table(target_doc, table_index_target, 4, 1, all_kks_numbers_for_insert, new_file_name)
-        # insert_value_to_table(target_doc, table_index_target, 5, 1, all_safety_classes_for_insert, new_file_name)
-        # insert_value_to_table(target_doc, table_index_target, 6, 1, all_of_each_counts_for_insert, new_file_name)
+        k = 0
+        tab_rows_list = [1,2,4,5,6]
+        tab_cols_list = [0,2,2,2,2]
+        value_list = [all_equipments_for_insert, all_kks_numbers_for_insert, all_safety_classes_for_insert, all_of_each_counts_for_insert]
+        while n=True:
+            n = insert_value_to_table(target_doc, table_index_target, tab_rows_list[k], tab_cols_list[k], value_list[k], new_file_name)
+            k += 1
+            
+        # insert_value_to_table(target_doc, table_index_target, row_index_target, col_index_target, value_to_insert, new_file_name)
+        # insert_value_to_table(target_doc, table_index_target, 2, 2, all_equipments_for_insert, new_file_name)
+        # insert_value_to_table(target_doc, table_index_target, 4, 2, all_kks_numbers_for_insert, new_file_name)
+        # insert_value_to_table(target_doc, table_index_target, 5, 2, all_safety_classes_for_insert, new_file_name)
+        # insert_value_to_table(target_doc, table_index_target, 6, 2, all_of_each_counts_for_insert, new_file_name)
         
 
 
