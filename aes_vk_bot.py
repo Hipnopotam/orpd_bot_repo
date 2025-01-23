@@ -152,10 +152,11 @@ def handle_document(message):
         print(f'Количество строк в таблице: {row_count}')
         equipment_count = row_count - (3 + 8)
         print(f'Количество оборудования в таблице: {equipment_count}')
-        
-        text = []
-        for paragraph in table:
-            text.append(doc.text)
+
+        text=[]
+        for i in range (2, equipment_count):
+            equip = extract_value_from_table(source_doc, table_index_source, i, 1)
+            text.append(equip)
 
         # Отправляем обратно пользователю текст из документа
         bot.send_message(message.chat.id, "\n".join(text))
