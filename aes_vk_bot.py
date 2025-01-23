@@ -192,7 +192,7 @@ def handle_document(message):
 
         # Вставляем значение в целевой документ
         target_doc = 'sample.docx'
-        id = f'{message.chat.id}_numbers.docx'
+        new_file_name = f'{message.chat.id}_numbers.docx'
         insert_value_to_table(target_doc, table_index_target, row_index_target, col_index_target, act_number, new_file_name)
 
 
