@@ -66,6 +66,18 @@ def extract_value_from_table(doc_path, table_index, row_index, col_index):
     return value
 
 
+def insert_value_to_table(doc_path, table_index, row_index, col_index, value, new_file_name):
+    # Открываем документ
+    doc = Document(doc_path)
+    # Получаем таблицу по индексу
+    table = doc.tables[table_index]
+    # Вставляем значение в указанную ячейку
+    table.cell(row_index, col_index).text = value
+    # Сохраняем изменения
+    doc.save(new_file_name)
+
+
+
 @bot.message_handler(commands=['start'])
 def say_hi(message):
     # Функция, отправляющая "Привет" в ответ на команду /start
@@ -139,7 +151,8 @@ def handle_document(message):
 
         # Извлекаем значение из исходного документа
         value_to_insert = extract_value_from_table(source_doc, table_index_source, row_index_source, col_index_source)
-        act_number = value_to_insert.split('№ ', 1)
+        
+        act_number = value_to_insert.split('№ ', 1) #################### ЭТО ЗНАЧЕНИЕ ДЛЯ ФОРМИРОВАНИЯ ОТЧЕТА ####################
         bot.send_message(message.chat.id, act_number[1])
 
          # Нас интересует первая таблица в документе
@@ -168,7 +181,17 @@ def handle_document(message):
             all_safety_classes_for_insert.append(f'{j}. {safety_class}.\n')
             all_of_each_counts_for_insert.append(f'{j}. {each_count}.\n')
 
-            
+        # Параметры для вставки значения
+        table_index_target = 0  # Индекс таблицы в целевом документе
+        row_index_target = 2     # Индекс строки в целевой таблице
+        col_index_target = 0     # Индекс столбца в целевой таблице
+
+        # Вставляем значение в целевой документ
+        target_doc = 'sample.docx'
+        id = f'{message.chat.id}_numbers.docx'
+        insert_value_to_table(target_doc, table_index_target, row_index_target, col_index_target, act_number, new_file_name)
+
+
         
         # Удаляем файл после обработки
         os.remove(message.document.file_name)
