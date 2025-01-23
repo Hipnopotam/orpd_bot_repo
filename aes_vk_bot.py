@@ -203,7 +203,7 @@ def handle_document(message):
         while n == True:
             n = insert_value_to_table(target_doc, table_index_target, tab_rows_list[k], tab_cols_list[k], value_list[k], new_file_name)
             k += 1
-            if k == 5:
+            if k == 4:
                 n = False
             
         # insert_value_to_table(target_doc, table_index_target, row_index_target, col_index_target, value_to_insert, new_file_name)
