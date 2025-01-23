@@ -150,13 +150,15 @@ def handle_document(message):
         row_count = len(table.rows)
         # начиная с 3-й строки (2я для кода) и минус 8 строк с конца
         print(f'Количество строк в таблице: {row_count}')
-        equipment_count = row_count - (3 + 8)
+        equipment_count = row_count - (3 + 7)
         print(f'Количество оборудования в таблице: {equipment_count}')
 
         text=[]
         for i in range (2, equipment_count):
+            j=0
             equip = extract_value_from_table(source_doc, table_index_source, i, 1)
-            text.append(equip)
+            text.append(j+equip)
+            j+=1
 
         # Отправляем обратно пользователю текст из документа
         bot.send_message(message.chat.id, "\n".join(text))
