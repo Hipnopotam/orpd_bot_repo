@@ -20,7 +20,7 @@ bot = telebot.TeleBot(s.token)
 
 START = '''Основные функции калькулятора:
 
-/start - начало (это сообщение)
+/start - начало (это сообщение)ddsdsdf
 
 /vessel - запуск калькулятора для расчета сосудов
 
@@ -30,7 +30,31 @@ START = '''Основные функции калькулятора:
 
 /help - помощь
 '''
+'''
+Запросы Active
+1. Тип сосуда (сосуд/теплообменник)     - update_db_text_fun
+2. Тип среды (газ/жидксоть/вода)        - update_db_text_fun
+3. Группа среды по ТР ТС                - update_db_digit_fun
+4. раб давление                         - update_db_digit_fun
+5. раб температура                      - update_db_digit_fun
+6.1 Темп кипения Газ = 0                - update_db_digit_fun
+6.2 Темп кипения жидкости               - update_db_digit_fun
+6.3 Темп кипения вода = 115             - update_db_digit_fun
+7. объем                                - update_db_digit_fun
+8. скорость коррозии                    - update_db_digit_fun
+Результат - НТД, периодичность НВО ГИ спец
 
+Запросы no_active
+1. Тип сосуда (сосуд/теплообменник)     - update_db_text_fun
+2. Тип среды (газ/жидксоть/вода)        - update_db_text_fun
+3. раб давление                         - update_db_digit_fun
+4. раб температура                      - update_db_digit_fun
+5.1 Темп кипения Газ = 0                - update_db_digit_fun
+5.2 Темп кипения жидкости               - update_db_digit_fun
+5.3 Темп кипения вода = 115             - update_db_digit_fun
+6. объем - update_db_digit_fun
+Результат - НТД
+'''
 #Начало. При вводе /start
 @bot.message_handler(commands=['start'])
 def nachalo_fun(message):
@@ -44,16 +68,55 @@ def nachalo_fun(message):
     bot.send_message(message.chat.id, greeting)
     bot.send_message(message.chat.id, START)
 
-###########^^^^^^^^^^^^ Начало расчета Сосудов ^^^^^^^^^^^^###########
 # При вводе /vessel
 @bot.message_handler(commands=['vessel'])
 def vessel_start(message):
-    fun.check_user_fun(message, 'ras4et')
+    check_user_result = fun.check_user_fun(message, 'ras4et')
+    bot.send_message(message.chat.id, check_user_result[1])
+    markup2 = types.InlineKeyboardMarkup()
+    button_sosud = types.InlineKeyboardButton(text = 'Сосуд', callback_data='sosud')
+    button_tepnik = types.InlineKeyboardButton(text = 'Теплообменник', callback_data='tepnik')
+    markup2.add(button_sosud)
+    markup2.add(button_tepnik)
+    bot.send_message(message.chat.id, 'Выберете тип оборудования:', parse_mode='html', reply_markup=markup2)
+
+def sos_type_fun(message):
+    # vf.sos_type_fun(message) #text
+    vf.update_db_text_fun(message, 'sosType')
+    markup1 = types.InlineKeyboardMarkup()
+    button_gas = types.InlineKeyboardButton(text = 'газ/пар', callback_data='gas')
+    button_jidk = types.InlineKeyboardButton(text = 'жидкость', callback_data='jidk')
+    button_water = types.InlineKeyboardButton(text = 'вода', callback_data='water')
+    markup1.add(button_gas)
+    markup1.add(button_jidk)
+    markup1.add(button_water)
+    bot.send_message(message.chat.id, 'Выберете тип среды:', reply_markup=markup1)
+
+def sreda_jidk_fun(message):
+    # vf.sreda_jidk_fun(message) # text
+    vf.update_db_text_fun(message, 'sreda')
+    mark = types.InlineKeyboardMarkup()
+    if 'вода' not in message.text:
+        button_1gr = types.InlineKeyboardButton(text = '1 группа', callback_data='gr1')
+        mark.add(button_1gr)
+        button_2gr = types.InlineKeyboardButton(text = '2 группа', callback_data='gr2')
+        mark.add(button_2gr)
+        bot.send_message(message.chat.id, 'Выберете группы среды по ТР ТС 032/2013', reply_markup=mark)
+    elif 'вода' in message.text:
+        # num4s = '2 группа'
+        # num4 = bot.send_message(message.chat.id, num4s)
+        sreda_TRTS_fun(bot.send_message(message.chat.id, '2 группа'))
+    else:
+        print('Ошибка 5')
+
+def sreda_TRTS_fun(message):
+    vf.update_db_text_fun(message, 'srTRTS')
     num1 = bot.send_message(message.chat.id, "Введите Рабочее давление, МПа:")
     bot.register_next_step_handler(num1, rabD_fun)
 
 def rabD_fun(message):
-    rab_d = vf.rabD_fun(message)
+    # rab_d = vf.rabD_fun(message) #digit
+    rab_d=vf.update_db_digit_fun(message, 'rabD')
     if rab_d == None:
         num1 = bot.send_message(message.chat.id, "Введите Рабочее давление цифрами, МПа:")
         bot.register_next_step_handler(num1, rabD_fun)
@@ -62,125 +125,59 @@ def rabD_fun(message):
         bot.register_next_step_handler(num2 ,rabT_fun)
 
 def rabT_fun(message):
-    rab_t = vf.rabT_fun(message)
+    # rab_t = vf.rabT_fun(message)
+    rab_t = vf.update_db_digit_fun(message, 'rabT')
     if rab_t == None:
-        n=bot.send_message(message.chat.id, 'Введите Рабочую температуру цифрами, МПа:')
-        bot.register_next_step_handler(n ,rabT_fun)
+        num1 = bot.send_message(message.chat.id, "Введите Рабочую температуру цифрами, С")
+        bot.register_next_step_handler(num1, rabT_fun)
     else:
-        markup1 = types.InlineKeyboardMarkup()
-        button_gas = types.InlineKeyboardButton(text = 'газ/пар', callback_data='gas')
-        button_jidk = types.InlineKeyboardButton(text = 'жидкость', callback_data='jidk')
-        button_water = types.InlineKeyboardButton(text = 'вода', callback_data='water')
-        markup1.add(button_gas)
-        markup1.add(button_jidk)
-        markup1.add(button_water)
-        bot.send_message(message.chat.id, 'Тип среды:', reply_markup=markup1)
+        sreda = vf.check_sreda_fun(message.chat.id)
+        # print(sreda,' - sreda')
+        if 'жидкость' in sreda:
+            num2 = bot.send_message(message.chat.id, 'Введите температуру кипения, С:')
+            bot.register_next_step_handler(num2 ,tKip_fun)
+        elif 'вода' in sreda or 'газ' in sreda:
+            num2 = bot.send_message(message.chat.id, 'Введите объем сосуда, м3:')
+            bot.register_next_step_handler(num2 ,obem_fun)
+        else:
+            print('ошибка 4')
+
+def tKip_fun(message):
+    # t_kip = vf.tKip_fun(message)
+    t_kip = vf.update_db_digit_fun(message, 'tKip')
+    if t_kip == None:
+        num1 = bot.send_message(message.chat.id, "Введите температуру кипения цифрами, С")
+        bot.register_next_step_handler(num1, tKip_fun)
+    else:
+        num2 = bot.send_message(message.chat.id, 'Введите объем сосуда, м3:')
+        bot.register_next_step_handler(num2 ,obem_fun)
 
 def obem_fun(message):
-    obem = vf.obem_fun(message)
+    # obem = vf.obem_fun(message)
+    obem = vf.update_db_digit_fun(message, 'obem')
     if obem == None:
-        num5=bot.send_message(message.chat.id, 'Введите температуру кипения цифрами, С:')
-        bot.register_next_step_handler(num5 ,obem_fun)
+        num1 = bot.send_message(message.chat.id, "Введите объем цифрами, С")
+        bot.register_next_step_handler(num1, obem_fun)
     else:
-        num5=bot.send_message(message.chat.id, 'Введите объем сосуда, м3:')
-        bot.register_next_step_handler(num5 , ntd_fun)
+        num2 = bot.send_message(message.chat.id, 'Введите скорость коррозии, мм/год:')
+        bot.register_next_step_handler(num2, sk_korr_fun)
 
-def ntd_fun(message):
-    ntd = vf.ntd_fun(message)
-    if ntd == None:
-        oshibka=bot.send_message(message.chat.id, 'Введите объем цифрами, м3:')
-        bot.register_next_step_handler(oshibka ,ntd_fun)
-    elif 'На этом обзор демо версии окончен' in ntd:
-        print('End of demo')
-        bot.send_message(message.chat.id, ntd)
+def sk_korr_fun(message):
+    sk_korr = vf.update_db_digit_fun(message, 'skKorr')
+    if sk_korr == None:
+        num1 = bot.send_message(message.chat.id, 'Введите скорость коррозии цифрами, мм/год')
+        bot.register_next_step_handler(num1, sk_korr_fun)
     else:
-        if 'ТР ТС 032:' in ntd:
-            mark = types.InlineKeyboardMarkup()
-            if 'вода' in ntd:
-                pass
-            else:
-                button_1gr = types.InlineKeyboardButton(text = '1 группа', callback_data='gr1')
-            button_2gr = types.InlineKeyboardButton(text = '2 группа', callback_data='gr2')
-            if 'вода' in ntd:
-                pass
-            else:
-                mark.add(button_1gr)
-            mark.add(button_2gr)
-            bot.send_message(message.chat.id, ntd, reply_markup=mark)
-        else:
-            n=bot.send_message(message.chat.id, ntd)
-            bot.register_next_step_handler(n ,srok_fun)
+        result_fun(message)
 
-
-def sreda_jidk_fun(message):
-    vf.sreda_jidk_fun(message)
-    num3 = bot.send_message(message.chat.id, 'Введите температуру кипения среды, С:')
-    bot.register_next_step_handler(num3 ,obem_fun)
-
-def rtn_fun(message):
+def result_fun(message):
+    result=vf.result_fun(message)
+    bot.send_message(message.chat.id, result)
+    # print(result, '- result')
     rtn = vf.rtn_fun(message)
-    rtn = bot.send_message(message.chat.id, rtn)
-    bot.register_next_step_handler(rtn ,srok_fun)
-
-def srok_fun(message):
-    srok = vf.srok_fun(message)
-    if srok == None:
-        oshibka=bot.send_message(message.chat.id, 'Введите назначенный срок цифрами, лет:')
-        bot.register_next_step_handler(oshibka ,srok_fun)
-    else:
-        markup2 = types.InlineKeyboardMarkup()
-        button_sosud = types.InlineKeyboardButton(text = 'Сосуд', callback_data='sosud')
-        button_tepnik = types.InlineKeyboardButton(text = 'Теплообменник', callback_data='tepnik')
-        markup2.add(button_sosud)
-        markup2.add(button_tepnik)
-        bot.send_message(message.chat.id, 'Выберете тип оборудования:', parse_mode='html', reply_markup=markup2)
-
-def sos_type_fun(message):
-    sos_type = vf.sos_type_fun(message)
-    r=bot.send_message(message.chat.id, sos_type)
-    bot.register_next_step_handler(r, pribavka_fun)
-
-def pribavka_fun(message):
-    pribavka = vf.pribavka_fun(message)
-    if pribavka == None:
-        oshibka=bot.send_message(message.chat.id, 'Введите прибавку цифрами, мм:')
-        bot.register_next_step_handler(oshibka ,pribavka_fun)
-    else:
-        connection = db.create_connection("ORPD.sqlite", 'Final')
-        query = f"SELECT rabD, rabT, sreda, tKip, obem, ntd, rtn, srok, sosType, pribavka FROM ras4et WHERE telegram_id={message.chat.id}"
-        result_query = db.execute_read_query(connection, query, 'Final tab')
-        
-        res ,= result_query
-        user_rab_d, user_rab_t, user_sreda, user_t_kip, user_obem, user_ntd, user_rtn, user_srok, user_sos_type, user_pribavka = res
-        if user_rtn == '1': user_rtn='<b>Да</b>'
-        else: user_rtn='Нет'
-        if user_ntd=='РУА': user_ntd='РУА-93'
-        elif user_ntd=='ИТНЭ': user_ntd='ИТНЭ-93'
-        else: user_ntd='ФНП ОРПД Приказ № 536'
-        final_message=f'''
-Тип сосуда - {user_sos_type}
-Рабочая среда - {user_sreda}
-Рабочее давление - {user_rab_d} МПа
-Рабочая температура - {user_rab_t} C
-Температура кипения среды при 0,07 МПа - {user_t_kip} C
-Объем сосуда - {user_obem} м3
-Срок эксплуатации - {user_srok}
-Прибавка на коррозию - {user_pribavka} мм.
-
-На сосуд распространяется <b>{user_ntd}</b>.
-Постановка на учет в РТН - {user_rtn}
-'''
-        bot.send_message(message.chat.id, final_message, parse_mode='HTML')
-        bot.send_message(message.chat.id, pribavka, parse_mode='HTML')
-
-        #Очистка запросов из БД
-        ochistka=f'DELETE FROM ras4et WHERE telegram_id={message.chat.id}'
-        db.execute_query(connection, ochistka,'Удалено из БД')
-        connection.close()
-
-###########^^^^^^^^^^^^ Конец расчета Сосудов ^^^^^^^^^^^^###########
-
-
+    bot.send_message(message.chat.id, rtn)
+    revizia = str(vf.revizia_fun(message)) + '\n\nДля продолжения введите /vessel.\nИли введите /start'
+    bot.send_message(message.chat.id, revizia)
 
 ####################################################################
 #########^^^^^^^^^^ Начало расчета трубопроводов ^^^^^^^^^^#########
@@ -341,11 +338,14 @@ def activate_fun(message, userID):
 
 def activate_by_admin(message):
     activ_admin = admin.activate_by_admin(message)
+    print(message.text, '- message.text')
+    user_id=message.text.split('-')[0]
+    print(user_id,'- user_id')
     if activ_admin== None:
         bot.send_message(48691773, 'Ошибка активации админом')
     else:
         message_for_user, message_for_admin = activ_admin
-        bot.send_message(message.chat.id, message_for_user, parse_mode='HTML')
+        bot.send_message(user_id, message_for_user, parse_mode='HTML')
         bot.send_message(48691773, message_for_admin)
 
 
@@ -358,11 +358,11 @@ def response(function_call):
         if function_call.data == "gas":
             num4s='газ'
             num4=bot.send_message(function_call.message.chat.id, num4s)
-            obem_fun(num4)
+            sreda_jidk_fun(num4)
         elif function_call.data == "water":
             num4s='вода'
             num4=bot.send_message(function_call.message.chat.id, num4s)
-            obem_fun(num4)
+            sreda_jidk_fun(num4)
         elif function_call.data == "jidk":
             num4s='жидкость'
             num4=bot.send_message(function_call.message.chat.id, num4s)
@@ -370,11 +370,11 @@ def response(function_call):
         elif function_call.data == "gr1":
             num4s='1 группа'
             num4=bot.send_message(function_call.message.chat.id, num4s)
-            rtn_fun(num4)
+            sreda_TRTS_fun(num4)
         elif function_call.data == "gr2":
             num4s='2 группа'
             num4=bot.send_message(function_call.message.chat.id, num4s)
-            rtn_fun(num4)
+            sreda_TRTS_fun(num4)
         elif function_call.data == 'sosud':
             num4s='Сосуд'
             num4=bot.send_message(function_call.message.chat.id, num4s)
@@ -420,8 +420,10 @@ def response(function_call):
             pipe_category_fun(mess)
         elif function_call.data == 'lvj':
             mess = bot.send_message(function_call.message.chat.id, 'Взрывопожароопасные: ЛВЖ')
+            pipe_category_fun(mess)
         elif function_call.data == 'gj':
             mess = bot.send_message(function_call.message.chat.id, 'Взрывопожароопасные: ГЖ')
+            pipe_category_fun(mess)
         elif function_call.data == 'not_fire':
             mess = bot.send_message(function_call.message.chat.id, 'ТГ или НГ')
             pipe_category_fun(mess)
@@ -443,6 +445,44 @@ def response(function_call):
         ############ КОНЕЦ КНОПОК ПОДПИСКИ ######
         else:
             bot.send_message(function_call.message.chat.id, 'ошибка 2')
+
+
+
+
+
+# При вводе /help
+@bot.message_handler(commands=['help'])
+def handle_text1(message):
+    mess='''
+Здравствуйте.
+Если вы зашли сюда, то скорее всего вы либо инженер, либо <i>сочуствующий</i>.
+
+Я решил реализовать этот проект, просто потому что мне интересно этим заниматься.
+
+Вы просто вводите все минимально необходимые сведения по вашему оборудованию и в конце получаете ответ.
+Конечно, я рекомендую всегда и все перепроверять.
+Но однако же, надеюсь, что он вам поможет.
+
+Для начала работы калькулятора введите /start
+Для получения полного доступа и активации подписки введите /activate
+
+По вопросам работы калькулятора и сотрудничеству пишите на <b>@hipnopotam</b>
+
+
+Список используемой литературы:
+1. Федеральные нормы и правила в области промышленной безопасности "Правила промышленной безопасности при использовании оборудования, работающего под избыточным давлением" Приказ от 15 декабря 2020 года № 536 - далее <b><a href="https://yandex.ru/search/?text=фнп+536&lr=35&src=suggest_B">ФНП</a></b>.
+
+2. Технический регламент Таможенного союза "О безопасности оборудования, работающего под избыточным давлением" (ТР ТС 032/2013) - далее <b><a href="https://yandex.ru/search/?text=тр+тс+032&lr=35&src=suggest_B">ТР ТС</a></b>.
+
+3. Руководящие указания по эксплуатации и ремонту сосудов и аппаратов, работающих под давлением ниже 0,07 МПа (0,7 кгс/кв. см) и вакуумом - далее <b><a href="https://yandex.ru/search/?text=руа-93&lr=35">РУА-93</a></b>.
+
+4. Инструкция по техническому надзору и эксплуатации сосудов, работающих под давлением, на которые не распространяются Правила Госгортехнадзора - далее <b><a href="https://yandex.ru/search/?text=итнэ-93&lr=35">ИТНЭ-93</a></b>.
+'''
+    bot.send_message(message.chat.id, mess, parse_mode='html')
+
+
+
+
 
 
 

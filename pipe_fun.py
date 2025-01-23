@@ -39,7 +39,7 @@ def pipe_text_fun(message, param_name):
     # Работа с БД
     connection = db.create_connection('ORPD.sqlite', param_name)
     zapros = f'UPDATE pipe SET {param_name}="{param}" WHERE telegram_id={message.chat.id}'
-    db.execute_query(connection, zapros, 'param_name внесение в БД')
+    db.execute_query(connection, zapros, f'{param_name} внесение в БД')
     connection.close()
     # Конец работы с БД
     return True
@@ -51,7 +51,12 @@ def pipe_final_fun(message):
     z ,= db.execute_read_query(connection, q)
     # (8, 48691773, 'Alexey N.', '1.0', '2.0', '3.0', '4.0', '5.0', 'Пар', '6.0', 'ТГ или НГ', None, 'no_active')
     _, user_id, user_name, rabD, rasD, rabT, rasT, nomD, sreda, skKorr, pipe_category, *_ = z
-
+    rabD = float(rabD)
+    rasD = float(rasD)
+    rabT = float(rabT)
+    rasT = float(rasT)
+    nomD = float(nomD)
+    skKorr = float(skKorr)
     if 'Класс 1' in pipe_category:
         category = 'I А (а)'
     elif 'Класс 3' in pipe_category and rabD>2.5 and (rabT>300 or rabT<-40):

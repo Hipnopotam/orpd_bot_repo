@@ -53,7 +53,7 @@ def check_user_fun(message, tab_name):
         newUserQuery=f"INSERT INTO {tab_name} ('telegram_id','name', 'prime4anie') VALUES ({message.from_user.id}, '{message.from_user.first_name} {message.from_user.last_name}', 'active')"
         db.execute_query(connection,newUserQuery)
         # handle_text(message)
-        check_user_result = ['Ваша подписка активна', 1]
+        check_user_result = [1, 'Ваша подписка активна']
         
     else:
         cleaner=f'DELETE FROM {tab_name} WHERE telegram_id={message.from_user.id}'
