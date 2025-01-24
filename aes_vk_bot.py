@@ -1,15 +1,3 @@
-import os
-import telebot
-import speech_recognition
-from pydub import AudioSegment
-import DB as db
-from tabulate import tabulate
-import openpyxl
-import docx
-from docx.enum.text import WD_ALIGN_PARAGRAPH
-from docx.shared import Inches
-from docx import Document
-from openpyxl import Workbook
 
 
 # Ниже нужно вставить токен, который дал BotFather при регистрации
@@ -283,3 +271,4 @@ def final_document(message):
         bot.send_message(message.chat.id, 'Для начала введите команду /start.')
 
 bot.polling()
+
